@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {View, StyleSheet, FlatList, Text} from 'react-native';
 import * as SQLite from 'expo-sqlite';
-import { List, TouchableRipple, FAB, Portal, Provider } from 'react-native-paper';
+import { List, TouchableRipple } from 'react-native-paper';
 
 
 function ReceiptList(){
 
     const [receipts, setReceipts] = useState("");
-    const [state, setState] = React.useState({ open: false });
-
-  const onStateChange = ({ open }) => setState({ open });
-
-  const { open } = state;
 
     const db = SQLite.openDatabase('test.db');
 
@@ -28,9 +23,12 @@ function ReceiptList(){
     getReceipts();
 
     return (
-      <>
       <View>
-        <FlatList
+        {receipts == "" ? 
+          <View style={{height: '100%', justifyContent: 'center', alignItems: 'center'}}>
+            <Text style={{color: "grey", fontStyle: 'italic'}}>Add a receipt to get started</Text>
+          </View> : 
+          <FlatList
             data={receipts}
             renderItem={({ item }) => (
                 <TouchableRipple
@@ -46,10 +44,9 @@ function ReceiptList(){
                 
             )}
             keyExtractor={item => item.id.toString()}
-        />
-        
+          />
+        }
         </View>
-        </>
     )
 }
 
