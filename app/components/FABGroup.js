@@ -10,16 +10,21 @@ const FABGroup = () => {
 
   const { open } = state;
 
+  //TODO
+  // Add camera screen
+  // Add Receipt [Manual] button sends to AddReceiptScreen
+  // Receipt Details Screen?
+
   
   return (
       <Portal>
         <FAB.Group
           open={open}
           visible
-          icon={open ? 'receipt' : 'plus'}
+          icon={open ? 'close' : 'plus'}
           actions={[
             { 
-              icon: 'plus', 
+              icon: 'pencil', 
               label: 'Add Receipt [Manual]',
               onPress: () => console.log('Pressed add') },
             {
