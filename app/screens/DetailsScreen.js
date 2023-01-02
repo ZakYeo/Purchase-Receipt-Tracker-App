@@ -1,13 +1,13 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView} from 'react-native';
-
+import { View, StyleSheet, ScrollView, Text} from 'react-native';
+import ReceiptCamera from '../components/Camera';
 
 
 function DetailsScreen( {route} ) {
  
     return (
         <View style={styles.container}>
-          <Text>Hi</Text>
+          <ReceiptCamera />
         </View>
     );
 }

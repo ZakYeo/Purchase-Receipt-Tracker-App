@@ -9,7 +9,7 @@ export default function ViewReceiptScreen( {navigation, data} ) {
     return (
       <Provider>
         <SafeAreaView style={styles.container}>
-          <FABGroup />
+          <FABGroup navigation={navigation} />
           <ReceiptList />
         </SafeAreaView>
       </Provider>

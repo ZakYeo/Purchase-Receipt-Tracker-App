@@ -22,9 +22,9 @@ function ViewReceiptStackScreen() {
       >
         {(props) => <ViewReceiptScreen {...props}></ViewReceiptScreen> }
       </ViewStack.Screen>
-      <ViewStack.Screen name="DiscoverDetails" component={DetailsScreen} 
+      <ViewStack.Screen name="Camera" component={DetailsScreen} 
         options={({ route }) => ({ 
-          title: route.params.item.title,
+          title: "Camera",
           headerStyle: {backgroundColor: colours.primaryCol},
           headerTintColor: colours.tertiaryCol 
         })}/>

@@ -3,7 +3,7 @@ import React from 'react';
 import { FAB, Portal } from 'react-native-paper';
 
 
-const FABGroup = () => {
+const FABGroup = ( {navigation} ) => {
   const [state, setState] = React.useState({ open: false });
 
   const onStateChange = ({ open }) => setState({ open });
@@ -30,7 +30,7 @@ const FABGroup = () => {
             {
               icon: 'camera',
               label: 'Add Receipt [Camera]',
-              onPress: () => console.log('Pressed star'),
+              onPress: () => navigation.navigate("Camera"),
             }
           ]}
           onStateChange={onStateChange}
