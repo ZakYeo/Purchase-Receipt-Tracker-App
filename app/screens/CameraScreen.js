@@ -3,7 +3,7 @@ import { View, StyleSheet, ScrollView, Text} from 'react-native';
 import ReceiptCamera from '../components/ReceiptCamera';
 
 
-function DetailsScreen( {route} ) {
+function CameraScreen( {route} ) {
  
     return (
         <View style={styles.container}>
@@ -22,4 +22,4 @@ const styles = StyleSheet.create({
   }
   });
 
-export default DetailsScreen;
+export default CameraScreen;

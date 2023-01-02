@@ -4,7 +4,7 @@ import * as SQLite from 'expo-sqlite';
 import { List, TouchableRipple } from 'react-native-paper';
 
 
-function ReceiptList(){
+function ReceiptList( { navigation } ){
 
     const [receipts, setReceipts] = useState("");
 
@@ -30,9 +30,10 @@ function ReceiptList(){
           </View> : 
           <FlatList
             data={receipts}
+            removeClippedSubviews={true}
             renderItem={({ item }) => (
                 <TouchableRipple
-                  onPress={() => console.log('Pressed')}
+                  onPress={() => navigation.navigate("Details", {store_name: item.store_name})}
                   rippleColor="rgba(0, 0, 0, .32)"
                 >
                 <List.Item

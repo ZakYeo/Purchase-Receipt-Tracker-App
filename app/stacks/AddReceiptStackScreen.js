@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import colours from '../config/colours';
 import constants from '../config/constants';
-import DetailsScreen from '../screens/DetailsScreen';
 import AddReceiptScreen from '../screens/AddReceiptScreen';
 
 
@@ -23,10 +22,6 @@ export default function AddReceiptStackScreen() {
         >
           {(props) => <AddReceiptScreen {...props}></AddReceiptScreen> }
         </AddStack.Screen>
-        <AddStack.Screen name="DetailsScreen" component={DetailsScreen} 
-        options={({ route }) => ({ title: route.params.item.title,
-          headerStyle: {backgroundColor: colours.primaryCol},
-          headerTintColor: colours.tertiaryCol })}/>
       </AddStack.Navigator>
     );
   }

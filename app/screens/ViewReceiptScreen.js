@@ -4,13 +4,14 @@ import ReceiptList from '../components/ReceiptList';
 import colours from '../config/colours';
 import { List, TouchableRipple, FAB, Portal, Provider } from 'react-native-paper';
 import FABGroup from '../components/FABGroup';
+
 export default function ViewReceiptScreen( {navigation, data} ) {
 
     return (
       <Provider>
         <SafeAreaView style={styles.container}>
           <FABGroup navigation={navigation} />
-          <ReceiptList />
+          <ReceiptList navigation={navigation}/>
         </SafeAreaView>
       </Provider>
     );

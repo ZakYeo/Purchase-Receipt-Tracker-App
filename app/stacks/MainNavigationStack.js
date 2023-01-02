@@ -2,7 +2,7 @@
 import React from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AddReceiptStackScreen from './AddReceiptStackScreen.js';
 import ViewReceiptStackScreen from './ViewReceiptStackScreen.js';
 import colours from '../config/colours';
@@ -34,11 +34,11 @@ export default function MainNavigationStack(){
             headerShown: false,
             tabBarStyle: {backgroundColor: colours.primaryCol}
           })}>
+            <Tab.Screen name={constants.nav_list}>
+          {(props) => <ViewReceiptStackScreen {...props} /> }
+          </Tab.Screen>
           <Tab.Screen name={constants.nav_map}>
             {(props) => <AddReceiptStackScreen {...props} /> }
-          </Tab.Screen>
-          <Tab.Screen name={constants.nav_list}>
-          {(props) => <ViewReceiptStackScreen {...props} /> }
           </Tab.Screen>
         </Tab.Navigator>
     )
