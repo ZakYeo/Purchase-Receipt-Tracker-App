@@ -1,11 +1,17 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import ReceiptForm from '../components/ReceiptForm';
-function AddReceiptScreen({navigation, data}) {
+function AddReceiptScreen({navigation, route}) {
+
+  
+  if(route.params === undefined){
+    route.params = {};
+    route.params.recpInfo = {};
+  }
 
     return (
       <View style={styles.container}>
-        <ReceiptForm navigation={navigation}/>
+        <ReceiptForm navigation={navigation} receiptInfo={route.params.recpInfo}/>
       </View>
     );
 }

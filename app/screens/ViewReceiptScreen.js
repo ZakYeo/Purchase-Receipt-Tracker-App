@@ -6,11 +6,6 @@ import { List, TouchableRipple, FAB, Portal, Provider } from 'react-native-paper
 import FABGroup from '../components/FABGroup';
 
 export default function ViewReceiptScreen( {navigation, route} ) {
-  
-  if(route.params){
-    console.log(route.params.receipt_information);
-  }
-  
 
     return (
       <Provider>

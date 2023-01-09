@@ -12,6 +12,7 @@ import * as MediaLibrary from "expo-media-library";
 import * as FileSystem from 'expo-file-system';
 import axios from "axios";
 import key from '../config/API_key';
+import { ActivityIndicator, MD2Colors } from "react-native-paper";
 
 
 export default function ReceiptCamera( { navigation } ) {
@@ -22,23 +23,38 @@ export default function ReceiptCamera( { navigation } ) {
   const [previewVisible, setPreviewVisible] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
 
+  const [loading, setLoading] = useState(false);
+
   let camera = useRef(null);
 
   const [type, setType] = useState(Camera.Constants.Type.back);
 
-  const extractData = (data) => {
+  const extractData = (data, base64) => {
+    if(data.totalAmount.data !== undefined){
+      data.totalAmount.data = data.totalAmount.data.toString();
+    }
+    if(data.taxAmount.data !== undefined){
+      data.taxAmount.data = data.taxAmount.data.toString();
+    }
+    if(data.date.data !== undefined){
+      date = new Date(data.date.data).toDateString();
+    }else{
+      date = "";
+    }
     let receiptInformation = {
         "total_amount": data.totalAmount.data,
         "tax_amount": data.taxAmount.data,
         "date": data.date.data,
         "merchant": data.merchantName.data,
         "merchant_address": data.merchantAddress.data,
-        "items": {}
+        "items": {},
+        "img": base64
     };
     const items = data.amounts;
     let price = "";
     let itemAndQuantityStr = "";
     let itemNameStr = "";
+    let quantity = "";
     const quantityRegex = /\d+/;
     const currencyUnits = ["£", "$", "€"];
     
@@ -70,15 +86,17 @@ export default function ReceiptCamera( { navigation } ) {
             // Typically indicates this "item" has been read incorrectly by the OCR
             // It could be "Card" or "Total" money spent instead of a singular item.
             // Not null means it's OK to add
-            receiptInformation.items[itemNameStr] = parseInt(quantity[0]);
+            receiptInformation.items[itemNameStr] = quantity[0];
           }
         }
         
       });
 
     });
-
-    navigation.navigate("ViewReceipt", {receipt_information: receiptInformation});
+    
+    navigation.navigate("Add", {recpInfo: receiptInformation});
+    setPreviewVisible(false);
+    setCapturedImage(null);
 
   }
 
@@ -88,7 +106,7 @@ export default function ReceiptCamera( { navigation } ) {
   extractTextFromImage = async (base64) => {
     const config = {
       headers:{
-          "apikey": key,
+          "apikey": key.key,
           "content-type": "application/json"
       }
     };
@@ -97,7 +115,7 @@ export default function ReceiptCamera( { navigation } ) {
           "filename": "receipt.jpg",
           "contentType":"image/jpeg"},
           config
-    ).then(res => extractData(res.data))
+    ).then(res => extractData(res.data, base64))
     .catch(err => console.log(err));
 
   }
@@ -107,6 +125,7 @@ export default function ReceiptCamera( { navigation } ) {
     const photo = await camera.takePictureAsync(); //
     setPreviewVisible(true);
     setCapturedImage(photo);
+    setLoading(true);
     
     //if (media_permission)
     //{
@@ -116,6 +135,7 @@ export default function ReceiptCamera( { navigation } ) {
       encoding: FileSystem.EncodingType.Base64,
     })
     await extractTextFromImage(imageBase64);
+    setLoading(false);
   };
 
   if (!permission) {
@@ -151,14 +171,18 @@ export default function ReceiptCamera( { navigation } ) {
           style={{
             flex: 1,
           }}
-        />
-        <Button onPress={() => setPreviewVisible(false)} title="Close" />
+        >
+        <ActivityIndicator animating={loading} style={{height: '100%'}}size={60} color={MD2Colors.red800} />
+        </ImageBackground>
+        
+        <Button onPress={() => setPreviewVisible(false)} title="Cancel" />
       </View>
     );
   }
 
   return (
     <View style={{ flex: 1 }}>
+      
       <Camera
         style={{ width: "100%", height: "100%" }}
         type={type}
@@ -166,8 +190,11 @@ export default function ReceiptCamera( { navigation } ) {
           camera = ref;
         }}
       >
+        
         <View style={styles.cameraView}>
+        
           <View style={styles.menuButtons}>
+            
             <TouchableOpacity
               onPress={() => {
                 setType(

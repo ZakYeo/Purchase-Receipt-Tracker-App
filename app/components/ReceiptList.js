@@ -8,7 +8,7 @@ function ReceiptList( { navigation } ){
 
     const [receipts, setReceipts] = useState("");
 
-    const db = SQLite.openDatabase('test3.db');
+    const db = SQLite.openDatabase('test4.db');
 
     const getReceipts = () => {
         db.transaction(tx => {

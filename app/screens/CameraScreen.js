@@ -1,13 +1,17 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView, Text} from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import ReceiptCamera from '../components/ReceiptCamera';
+import { useIsFocused } from '@react-navigation/native';
 
 
 function CameraScreen( {navigation} ) {
+
+  // Fixes a bug where the camera doesn't load in certain situations:
+  const isFocused = useIsFocused(); 
  
     return (
         <View style={styles.container}>
-          <ReceiptCamera navigation={navigation}/>
+          { isFocused && <ReceiptCamera navigation={navigation}/> }
         </View>
     );
 }

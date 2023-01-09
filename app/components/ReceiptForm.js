@@ -1,41 +1,35 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, ScrollView, TextInput } from 'react-native';
+import { StyleSheet, View, ScrollView, TextInput, Image } from 'react-native';
 import { Button } from 'react-native-paper';
 import * as SQLite from 'expo-sqlite';
+import InsertReceipt from '../../InsertReceipt';
 
 
-function ReceiptForm({navigation}){
+function ReceiptForm({
+                      navigation, 
+                      receiptInfo={}}){
 
-    const [receiptName, setReceiptName] = useState("");
+
+    const [receiptName, setReceiptName] = useState(receiptInfo.merchant);
     const [category, setCategory] = useState("");
-    const [totalCost, setTotalCost] = useState("");
-    const [totalTax, setTotalTax] = useState("");
-    const [locationName, setLocationName] = useState("");
-    const [locationAddress, setLocationAddress] = useState("");
-    const [date, setDate] = useState("");
+    const [totalCost, setTotalCost] = useState(receiptInfo.total_amount);
+    const [totalTax, setTotalTax] = useState(receiptInfo.tax_amount);
+    const [locationName, setLocationName] = useState(receiptInfo.merchant);
+    const [locationAddress, setLocationAddress] = useState(receiptInfo.merchant_address);
+    const [date, setDate] = useState(receiptInfo.date);
+    const [base64, setBase64] = useState(receiptInfo.img);
 
   
-    const db = SQLite.openDatabase('test3.db');
+    const db = SQLite.openDatabase('test4.db');
     db.transaction(tx => {
       tx.executeSql(
-        'create table if not exists receipts (id integer primary key not null, receipt_name text, category text, total_cost text, total_tax text, location_name text, location_address text, date text);'
+        'create table if not exists receipts (id integer primary key not null, receipt_name text, category text, total_cost text, total_tax text, location_name text, location_address text, date text, base64 text);'
       );
     });
 
     const saveReceipt = () => {
-
-      db.transaction(tx => {
-        tx.executeSql(
-          'insert into receipts (receipt_name, category, total_cost, total_tax, location_name, location_address, date) values (?, ?, ?, ?, ?, ?, ?)',
-          [receiptName, category, totalCost, totalTax, locationName, locationAddress, date]
-        );
-        tx.executeSql("select * from receipts", [], (_, { rows }) =>
-          console.log(JSON.stringify(rows))
-        );
-        navigation.navigate("ViewReceipt");
-        
-      })
-      
+      InsertReceipt({db, receiptName, category, totalCost, totalTax, locationName, locationAddress, date, base64});
+      navigation.navigate("ViewReceipt");
     };
 
     
@@ -57,7 +51,12 @@ function ReceiptForm({navigation}){
               onChangeText={setCategory}
             />
           </View>
-          <View style={{flex: 1.1, borderWidth: 1, marginLeft: 10, marginRight: 10}} />
+          {base64 ? 
+                    <Image
+                      source={{ uri: `data:image/png;base64,${base64}`}}
+                      style={{flex: 1.1, borderWidth: 3, marginLeft: 10, marginRight: 10}}
+                    />
+                  : <View style={{flex: 1.1, borderWidth: 1, marginLeft: 10, marginRight: 10}} />}
         </View>
         <View style={{flexDirection: "row", justifyContent: 'space-between'}}>
           <TextInput
