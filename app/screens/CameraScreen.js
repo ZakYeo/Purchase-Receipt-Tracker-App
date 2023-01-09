@@ -3,11 +3,11 @@ import { View, StyleSheet, ScrollView, Text} from 'react-native';
 import ReceiptCamera from '../components/ReceiptCamera';
 
 
-function CameraScreen( {route} ) {
+function CameraScreen( {navigation} ) {
  
     return (
         <View style={styles.container}>
-          <ReceiptCamera />
+          <ReceiptCamera navigation={navigation}/>
         </View>
     );
 }

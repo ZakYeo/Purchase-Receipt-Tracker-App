@@ -23,15 +23,17 @@ function ViewReceiptStackScreen() {
       >
         {(props) => <ViewReceiptScreen {...props}></ViewReceiptScreen> }
       </ViewStack.Screen>
-      <ViewStack.Screen name="Camera" component={CameraScreen} 
+      <ViewStack.Screen name="Camera" 
         options={({ route }) => ({ 
           title: "Camera Add",
           headerStyle: {backgroundColor: colours.primaryCol},
           headerTintColor: colours.tertiaryCol 
-        })}/>
+        })}>
+          {(props) => <CameraScreen {...props}></CameraScreen> }
+      </ViewStack.Screen>
         <ViewStack.Screen name="Add" component={AddReceiptScreen} 
         options={({ route }) => ({ 
-          title: "Manual Add",
+          title: "Add Receipt",
           headerStyle: {backgroundColor: colours.primaryCol},
           headerTintColor: colours.tertiaryCol 
         })}/>

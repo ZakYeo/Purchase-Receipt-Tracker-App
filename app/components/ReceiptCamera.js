@@ -9,13 +9,12 @@ import {
 } from "react-native";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
+import * as FileSystem from 'expo-file-system';
+import axios from "axios";
+import key from '../config/API_key';
 
 
-// OCR libraries not currently supported with Expo Go
-// See: https://expo.canny.io/feature-requests/p/support-optical-character-recognition-ocr
-// Therefore I am, for now, forced to use an external API for OCR
-
-export default function ReceiptCamera() {
+export default function ReceiptCamera( { navigation } ) {
 
   const [permission, requestPermission] = Camera.useCameraPermissions();
   const [media_permission, requestMediaPermission] = MediaLibrary.usePermissions();
@@ -27,20 +26,96 @@ export default function ReceiptCamera() {
 
   const [type, setType] = useState(Camera.Constants.Type.back);
 
+  const extractData = (data) => {
+    let receiptInformation = {
+        "total_amount": data.totalAmount.data,
+        "tax_amount": data.taxAmount.data,
+        "date": data.date.data,
+        "merchant": data.merchantName.data,
+        "merchant_address": data.merchantAddress.data,
+        "items": {}
+    };
+    const items = data.amounts;
+    let price = "";
+    let itemAndQuantityStr = "";
+    let itemNameStr = "";
+    const quantityRegex = /\d+/;
+    const currencyUnits = ["£", "$", "€"];
+    
+    items.forEach((item, _) => {
+      price = item.data.toString(); 
+      // Often the price will not have decimal places as a price should.
+      if(price.length == 1){ // Check now
+        // Add decimal place
+        price = price + ".";
+      }
+      while(price.length < 4){
+        // Pad price with decimal places.
+        // e.g 2. turns to 2.00, 2.0 into 2.00
+        price = price + "0"
+      }
+      // Loop through every currency
+      currencyUnits.forEach((unit, _) => {
+        // If the item contains the currency unit and price
+        if(item.text.includes(`${unit}${price}`)){
+          // Remove the price from the item name
+          itemAndQuantityStr = item.text.replace(`${unit}${price}`, "");
+          // Grab the quantity from the item name
+          quantity = itemAndQuantityStr.match(quantityRegex)
+          // Now remove the quantity from item name
+          itemNameStr = itemAndQuantityStr.replace(`${quantity}`, "");
+
+          // Check if the quantity is a null value
+          if(!Object.is(quantity, null) && quantity.length > 0){
+            // Typically indicates this "item" has been read incorrectly by the OCR
+            // It could be "Card" or "Total" money spent instead of a singular item.
+            // Not null means it's OK to add
+            receiptInformation.items[itemNameStr] = parseInt(quantity[0]);
+          }
+        }
+        
+      });
+
+    });
+
+    navigation.navigate("ViewReceipt", {receipt_information: receiptInformation});
+
+  }
+
+  // OCR libraries not currently supported with Expo Go
+  // See: https://expo.canny.io/feature-requests/p/support-optical-character-recognition-ocr
+  // Therefore I am, for now, forced to use an external API for OCR
+  extractTextFromImage = async (base64) => {
+    const config = {
+      headers:{
+          "apikey": key,
+          "content-type": "application/json"
+      }
+    };
+    await axios.post("https://api.taggun.io/api/receipt/v1/verbose/encoded", {
+          "image": base64,
+          "filename": "receipt.jpg",
+          "contentType":"image/jpeg"},
+          config
+    ).then(res => extractData(res.data))
+    .catch(err => console.log(err));
+
+  }
+
   const takePicture = async () => {
     if (!permission) return;
-    const photo = await camera.takePictureAsync();
-    console.log(
-      "finished taking photo here's the photo",
-      photo
-    );
+    const photo = await camera.takePictureAsync(); //
     setPreviewVisible(true);
     setCapturedImage(photo);
     
-    if (media_permission)
-    {
-     MediaLibrary.saveToLibraryAsync(photo.uri);
-    }
+    //if (media_permission)
+    //{
+    // MediaLibrary.saveToLibraryAsync(photo.uri);
+    //}
+    const imageBase64 = await FileSystem.readAsStringAsync(`${photo.uri}`,{
+      encoding: FileSystem.EncodingType.Base64,
+    })
+    await extractTextFromImage(imageBase64);
   };
 
   if (!permission) {
@@ -60,7 +135,6 @@ export default function ReceiptCamera() {
   }
 
   if (previewVisible && capturedImage) {
-    console.log(capturedImage);
     return (
       <View
         style={{

@@ -8,7 +8,7 @@ function ReceiptList( { navigation } ){
 
     const [receipts, setReceipts] = useState("");
 
-    const db = SQLite.openDatabase('test.db');
+    const db = SQLite.openDatabase('test3.db');
 
     const getReceipts = () => {
         db.transaction(tx => {
@@ -37,8 +37,8 @@ function ReceiptList( { navigation } ){
                   rippleColor="rgba(0, 0, 0, .32)"
                 >
                 <List.Item
-                    title={item.store_name}
-                    description={item.purchase_date}
+                    title={item.receipt_name}
+                    description={item.date}
                     left={props => <List.Icon {...props} icon="receipt" />}
                 />
                 </TouchableRipple>

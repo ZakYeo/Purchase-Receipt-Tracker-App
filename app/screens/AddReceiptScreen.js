@@ -5,7 +5,7 @@ function AddReceiptScreen({navigation, data}) {
 
     return (
       <View style={styles.container}>
-        <ReceiptForm />
+        <ReceiptForm navigation={navigation}/>
       </View>
     );
 }
