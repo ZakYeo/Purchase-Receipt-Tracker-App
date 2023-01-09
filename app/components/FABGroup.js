@@ -10,10 +10,6 @@ const FABGroup = ( {navigation } ) => {
 
   const { open } = state;  
 
-  //TODO
-  // Add camera screen
-  // Add Receipt [Manual] button sends to AddReceiptScreen
-  // Receipt Details Screen?
 
   
   return (
