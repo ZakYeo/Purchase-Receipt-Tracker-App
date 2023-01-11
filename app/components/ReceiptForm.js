@@ -12,7 +12,6 @@ function ReceiptForm({
                       recpInfo={},
                     edit}){
 
-    //{"base64": null, "category": "", "date": "2023-01-02T12:00:00.000Z", "id": 1, "location_address": null, "location_name": "Morrisons", "receipt_name": "Morrisons", "total_cost": "5.28", "total_tax": null}
     const [receiptName, setReceiptName] = useState(recpInfo.receipt_name);
     const [category, setCategory] = useState("");
     const [totalCost, setTotalCost] = useState(recpInfo.total_cost);
