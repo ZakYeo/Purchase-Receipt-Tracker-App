@@ -79,7 +79,7 @@ function ReceiptForm({
               onPress={() => openCamera()}
               rippleColor="rgba(0, 0, 0, .32)"
             >
-              {base64 ? 
+              {recpInfo.base64 ? 
                 <Image
                   source={{ uri: `data:image/png;base64,${base64}`}}
                   style={{width: '100%', height: '100%', resizeMode: "stretch"}}
