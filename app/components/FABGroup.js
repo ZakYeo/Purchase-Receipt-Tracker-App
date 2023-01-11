@@ -20,7 +20,7 @@ const FABGroup = ( {navigation, onToggleSnackBar } ) => {
       onToggleSnackBar();
     }else{
       let resp = await ExtractTextFromImage(img.base64);
-      navigation.navigate("Add", {recpInfo: ExtractData(resp.data, img.base64)});
+      navigation.navigate("Add", {title: "Create Receipt",recpInfo: ExtractData(resp.data, img.base64)});
     }
   };
 
@@ -36,7 +36,7 @@ const FABGroup = ( {navigation, onToggleSnackBar } ) => {
             { 
               icon: 'pencil-plus', 
               label: 'Add Receipt [Manual]',
-              onPress: () => navigation.navigate("Add") },
+              onPress: () => navigation.navigate("Add", {title: "Create Receipt"}) },
             {
               icon: 'camera-plus',
               label: 'Add Receipt [Camera]',

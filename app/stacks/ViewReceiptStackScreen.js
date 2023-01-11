@@ -32,7 +32,7 @@ function ViewReceiptStackScreen() {
       </ViewStack.Screen>
         <ViewStack.Screen name="Add" component={AddReceiptScreen} 
         options={({ route }) => ({ 
-          title: "Add Receipt",
+          title: route.params.title,
           headerStyle: {backgroundColor: colours.primaryCol},
           headerTintColor: colours.tertiaryCol 
         })}/>

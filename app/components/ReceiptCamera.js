@@ -45,7 +45,7 @@ export default function ReceiptCamera( { navigation } ) {
       encoding: FileSystem.EncodingType.Base64,
     })
     let resp = await ExtractTextFromImage(imageBase64);
-    navigation.navigate("Add", {recpInfo: ExtractData(resp.data, imageBase64)});
+    navigation.navigate("Add", {title: "Create Receipt",recpInfo: ExtractData(resp.data, imageBase64)});
     setPreviewVisible(false);
     setCapturedImage(null);
     setLoading(false);

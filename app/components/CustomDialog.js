@@ -45,7 +45,7 @@ const CustomDialog = ({dlgVisible, hideDialog, dlgContent, navigation}) => {
             </Dialog.Content>
             <Dialog.Actions>
               <Button onPress={hideDialog}>Done</Button>
-              <Button onPress={() => navigation.navigate("Add", {recpInfo: dlgContent, edit: true})}>Edit</Button> 
+              <Button onPress={() => navigation.navigate("Add", {title: "Edit Receipt",recpInfo: dlgContent, edit: true})}>Edit</Button> 
               <Button onPress={() => handleDelete()}>Delete</Button>
             </Dialog.Actions>
           </Dialog>
