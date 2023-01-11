@@ -20,7 +20,7 @@ export default ExtractData = (data, base64) => {
         "location_name": data.merchantName.data,
         "location_address": data.merchantAddress.data,
         "items": {},
-        "img": base64
+        "base64": base64
     };
     const items = data.amounts;
     let price = "";
