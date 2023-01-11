@@ -10,9 +10,9 @@ import {
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import * as FileSystem from 'expo-file-system';
-import axios from "axios";
-import key from '../config/API_key';
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
+import ExtractTextFromImage from '../../ExtractTextFromImage';
+import ExtractData from '../../ExtractData';
 
 
 export default function ReceiptCamera( { navigation } ) {
@@ -29,96 +29,6 @@ export default function ReceiptCamera( { navigation } ) {
 
   const [type, setType] = useState(Camera.Constants.Type.back);
 
-  const extractData = (data, base64) => {
-    if(data.totalAmount.data !== undefined){
-      data.totalAmount.data = data.totalAmount.data.toString();
-    }
-    if(data.taxAmount.data !== undefined){
-      data.taxAmount.data = data.taxAmount.data.toString();
-    }
-    if(data.date.data !== undefined){
-      date = new Date(data.date.data).toDateString();
-    }else{
-      date = "";
-    }
-    let receiptInformation = {
-        "total_amount": data.totalAmount.data,
-        "tax_amount": data.taxAmount.data,
-        "date": data.date.data,
-        "merchant": data.merchantName.data,
-        "merchant_address": data.merchantAddress.data,
-        "items": {},
-        "img": base64
-    };
-    const items = data.amounts;
-    let price = "";
-    let itemAndQuantityStr = "";
-    let itemNameStr = "";
-    let quantity = "";
-    const quantityRegex = /\d+/;
-    const currencyUnits = ["£", "$", "€"];
-    
-    items.forEach((item, _) => {
-      price = item.data.toString(); 
-      // Often the price will not have decimal places as a price should.
-      if(price.length == 1){ // Check now
-        // Add decimal place
-        price = price + ".";
-      }
-      while(price.length < 4){
-        // Pad price with decimal places.
-        // e.g 2. turns to 2.00, 2.0 into 2.00
-        price = price + "0"
-      }
-      // Loop through every currency
-      currencyUnits.forEach((unit, _) => {
-        // If the item contains the currency unit and price
-        if(item.text.includes(`${unit}${price}`)){
-          // Remove the price from the item name
-          itemAndQuantityStr = item.text.replace(`${unit}${price}`, "");
-          // Grab the quantity from the item name
-          quantity = itemAndQuantityStr.match(quantityRegex)
-          // Now remove the quantity from item name
-          itemNameStr = itemAndQuantityStr.replace(`${quantity}`, "");
-
-          // Check if the quantity is a null value
-          if(!Object.is(quantity, null) && quantity.length > 0){
-            // Typically indicates this "item" has been read incorrectly by the OCR
-            // It could be "Card" or "Total" money spent instead of a singular item.
-            // Not null means it's OK to add
-            receiptInformation.items[itemNameStr] = quantity[0];
-          }
-        }
-        
-      });
-
-    });
-    
-    navigation.navigate("Add", {recpInfo: receiptInformation});
-    setPreviewVisible(false);
-    setCapturedImage(null);
-
-  }
-
-  // OCR libraries not currently supported with Expo Go
-  // See: https://expo.canny.io/feature-requests/p/support-optical-character-recognition-ocr
-  // Therefore I am, for now, forced to use an external API for OCR
-  extractTextFromImage = async (base64) => {
-    const config = {
-      headers:{
-          "apikey": key.key,
-          "content-type": "application/json"
-      }
-    };
-    await axios.post("https://api.taggun.io/api/receipt/v1/verbose/encoded", {
-          "image": base64,
-          "filename": "receipt.jpg",
-          "contentType":"image/jpeg"},
-          config
-    ).then(res => extractData(res.data, base64))
-    .catch(err => console.log(err));
-
-  }
 
   const takePicture = async () => {
     if (!permission) return;
@@ -134,7 +44,10 @@ export default function ReceiptCamera( { navigation } ) {
     const imageBase64 = await FileSystem.readAsStringAsync(`${photo.uri}`,{
       encoding: FileSystem.EncodingType.Base64,
     })
-    await extractTextFromImage(imageBase64);
+    let resp = await ExtractTextFromImage(imageBase64);
+    navigation.navigate("Add", {recpInfo: ExtractData(resp.data, imageBase64)});
+    setPreviewVisible(false);
+    setCapturedImage(null);
     setLoading(false);
   };
 

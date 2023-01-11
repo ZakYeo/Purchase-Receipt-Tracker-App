@@ -2,13 +2,25 @@
 import React from 'react';
 import { Modal, FAB, Portal } from 'react-native-paper';
 import pickImageAsync from '../../PickImageAsync';
-
+import ExtractTextFromImage from '../../ExtractTextFromImage';
+import ExtractData from '../../ExtractData';
 const FABGroup = ( {navigation } ) => {
   const [state, setState] = React.useState({ open: false });
 
   const onStateChange = ({ open }) => setState({ open });
 
   const { open } = state;  
+
+  const chooseReceiptFromLibrary = async () => {
+    const img = await pickImageAsync();
+
+    if(img == null){
+      console.log("No image chosen.");
+    }else{
+      let resp = await ExtractTextFromImage(img.base64);
+      navigation.navigate("Add", {recpInfo: ExtractData(resp.data, img.base64)});
+    }
+  };
 
 
   
@@ -31,7 +43,7 @@ const FABGroup = ( {navigation } ) => {
             {
               icon: 'image-plus',
               label: 'Choose Receipt [Library]',
-              onPress: () => pickImageAsync(),
+              onPress: () => chooseReceiptFromLibrary(),
             }
           ]}
           onStateChange={onStateChange}

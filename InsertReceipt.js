@@ -6,11 +6,6 @@ export default async function InsertReceipt ( {db, receiptName, category, totalC
           'insert into receipts (receipt_name, category, total_cost, total_tax, location_name, location_address, date, base64) values (?, ?, ?, ?, ?, ?, ?, ?)',
           [receiptName, category, totalCost, totalTax, locationName, locationAddress, date, base64]
         );
-        tx.executeSql("select * from receipts", [], (_, { rows }) =>
-          console.log(JSON.stringify(rows))
-        );
-        
-        
       })
     
 
