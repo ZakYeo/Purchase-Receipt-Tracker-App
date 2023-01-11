@@ -14,7 +14,7 @@ export default function ViewReceiptScreen( {navigation, route} ) {
   const onToggleSnackBar = () => setVisible(!visible);
   const onDismissSnackBar = () => setVisible(false);
   // Pop-up Dialog State
-  const [dlgVisible, setDlgVisible] = React.useState(true);
+  const [dlgVisible, setDlgVisible] = React.useState(false);
 
   const [dlgContent, setDlgContent] = React.useState({});
   const showDialog = () => setDlgVisible(true);
@@ -23,7 +23,7 @@ export default function ViewReceiptScreen( {navigation, route} ) {
   return (
     <Provider>
       <SafeAreaView style={styles.container}>
-        <CustomSnackbar msg={"No photo selected. Cancelling."} visible={visible} onDismissSnackBar={onDismissSnackBar}/>
+        <CustomSnackbar msg={"No photo selected."} visible={visible} onDismissSnackBar={onDismissSnackBar}/>
         <FABGroup navigation={navigation} onToggleSnackBar={onToggleSnackBar}/>
         <ReceiptList setDlgContent={setDlgContent} showDialog={showDialog} />
         <CustomDialog dlgVisible={dlgVisible} hideDialog={hideDialog} dlgContent={dlgContent}/>

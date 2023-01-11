@@ -1,6 +1,6 @@
 
 
-export default extractData = (data, base64) => {
+export default ExtractData = (data, base64) => {
     if(data.totalAmount.data !== undefined){
         data.totalAmount.data = data.totalAmount.data.toString();
     }

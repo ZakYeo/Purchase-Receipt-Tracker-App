@@ -1,5 +1,5 @@
 import axios from "axios";
-import key from './app/config/API_key';
+import key from '../config/API_key';
 
 
 // OCR libraries not currently supported with Expo Go

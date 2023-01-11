@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, ScrollView, TextInput, Image } from 'react-native';
 import { Button } from 'react-native-paper';
 import * as SQLite from 'expo-sqlite';
-import InsertReceipt from '../functions/InsertReceipt';
+import InsertReceipt from '../functions/InsertReceipt'
 
 
 function ReceiptForm({

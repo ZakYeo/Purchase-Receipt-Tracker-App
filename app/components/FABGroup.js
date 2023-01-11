@@ -3,7 +3,7 @@ import React from 'react';
 import { Snackbar, FAB, Portal } from 'react-native-paper';
 import pickImageAsync from '../../PickImageAsync';
 import ExtractTextFromImage from '../functions/ExtractTextFromImage';
-import ExtractData from '../functions/ExtractData'
+import ExtractData from '../functions/ExtractData';
 const FABGroup = ( {navigation, onToggleSnackBar } ) => {
   const [state, setState] = React.useState({ open: false });
   

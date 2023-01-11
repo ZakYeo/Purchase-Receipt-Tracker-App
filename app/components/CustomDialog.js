@@ -1,6 +1,16 @@
 import {Dialog, Button} from 'react-native-paper';
 import { Text, Image, StyleSheet, View, ScrollView } from 'react-native';
+import DeleteReceipt from '../functions/DeleteReceipt';
+import * as SQLite from 'expo-sqlite';
 const CustomDialog = ({dlgVisible, hideDialog, dlgContent}) => {
+
+    const handleDelete = () => {
+        const db = SQLite.openDatabase('test4.db');
+        let id = dlgContent.id;
+        DeleteReceipt({db, id});
+        hideDialog();
+
+    };
 
     return (
         <Dialog visible={dlgVisible} onDismiss={hideDialog}>
@@ -37,8 +47,8 @@ const CustomDialog = ({dlgVisible, hideDialog, dlgContent}) => {
             </Dialog.Content>
             <Dialog.Actions>
               <Button onPress={hideDialog}>Done</Button>
-              <Button onPress={hideDialog}>Edit</Button>
-              <Button onPress={hideDialog}>Delete</Button>
+              <Button onPress={hideDialog}>Edit</Button> 
+              <Button onPress={() => handleDelete()}>Delete</Button>
             </Dialog.Actions>
           </Dialog>
     )
