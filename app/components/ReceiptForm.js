@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, ScrollView, TextInput, Image } from 'react-native';
+import { StyleSheet, View, ScrollView, TextInput, Image, Dimensions } from 'react-native';
 import { Button, TouchableRipple } from 'react-native-paper';
 import * as SQLite from 'expo-sqlite';
 import { Camera } from "expo-camera";
@@ -11,6 +11,9 @@ function ReceiptForm({
                       navigation, 
                       recpInfo={},
                     edit}){
+
+    const windowWidth = Dimensions.get('window').width;
+    const windowHeight = Dimensions.get('window').height;
 
     const [receiptName, setReceiptName] = useState(recpInfo.receipt_name);
     const [category, setCategory] = useState("");
@@ -55,101 +58,100 @@ function ReceiptForm({
     
     
     return (
-      <ScrollView style={styles.container}>
-        <View style={{flexDirection: "row", flex: 1}}>
-          <View style={styles.maininfo}>
+      <View style={styles.container}>
+        <View style={{flexDirection: "row", flex: 1, height: windowHeight*0.25}}>
+          <View style={{flex: 1, justifyContent: 'space-evenly', marginRight: 10}}>
             <TextInput
-              style={styles.mainTextInput}
+              style={styles.textInput}
               placeholder="Receipt Name"
               value={receiptName}
               onChangeText={setReceiptName}
             />
             <TextInput
-              style={styles.mainTextInput}
+              style={styles.textInput}
               placeholder="Category"
               value={category}
               onChangeText={setCategory}
             />
           </View>
-          {base64 ? 
-                    <Image
-                      source={{ uri: `data:image/png;base64,${base64}`}}
-                      style={{flex: 1.1, borderWidth: 3, marginLeft: 10, marginRight: 10}}
-                    />
-                  : <View style={{flex: 1, borderWidth: 1}} >
-                      <TouchableRipple
-                        onPress={() => openCamera()}
-                        rippleColor="rgba(0, 0, 0, .32)"
-                      >
-                        <Image
-                          source={require('../assets/no_photo.jpg')}
-                          style={{width: '100%', height: '100%'}} 
-                        />
-                      </TouchableRipple>
-                    </View>}
-        </View>
-        <View style={{flexDirection: "row", justifyContent: 'space-between'}}>
-          <TextInput
-                style={{marginTop: 30, width: '49%', borderWidth: 1,padding: 5}}
-                placeholder="Total Cost"
-                value={totalCost}
-                onChangeText={setTotalCost}
-              />
-          <TextInput
-              style={{marginTop: 30, width: '49%', borderWidth: 1,padding: 5}}
-              placeholder="Total Tax"
-              value={totalTax}
-              onChangeText={setTotalTax}
-            />
+          <View style={{flex: 1, borderWidth: 1}} >
+            <TouchableRipple
+              onPress={() => openCamera()}
+              rippleColor="rgba(0, 0, 0, .32)"
+            >
+              {base64 ? 
+                <Image
+                  source={{ uri: `data:image/png;base64,${base64}`}}
+                  style={{width: '100%', height: '100%', resizeMode: "stretch"}}
+                  resizeMode={'cover'}
+                />
+                : 
+                  <Image
+                    source={{uri: 'https://wiki.tripwireinteractive.com/images/4/47/Placeholder.png'}}
+                    style={{width: '100%', height: '100%', resizeMode:"contain"}} 
+                    resizeMode={'cover'}/>
+                }
+            </TouchableRipple>
           </View>
-          <View>
-            <TextInput 
-               style={{marginTop: 30, borderWidth: 1,padding: 5}}
+        </View>
+        <View style={{justifyContent: 'space-evenly', height: windowHeight*0.55}}>
+          <View style={{flexDirection: "row", justifyContent: 'space-between'}}>
+            <TextInput
+                  style={[styles.textInput,{width: '45%'}]}
+                  placeholder="Total Cost"
+                  value={totalCost}
+                  onChangeText={setTotalCost}
+                />
+            <TextInput
+                style={[styles.textInput,{width: '45%'}]}
+                placeholder="Total Tax"
+                value={totalTax}
+                onChangeText={setTotalTax}
+              />
+          </View>
+          <TextInput 
+               style={styles.textInput}
                placeholder="Location Name"
                value={locationName}
                onChangeText={setLocationName}
             />
             <TextInput 
-               style={{marginTop: 20, borderWidth: 1,padding: 5}}
+               style={styles.textInput}
                placeholder="Location Address"
                value={locationAddress}
                onChangeText={setLocationAddress}
             />
             <TextInput 
-               style={{marginTop: 20, borderWidth: 1,padding: 5}}
+               style={styles.textInput}
                placeholder="Date"
                value={date}
                onChangeText={setDate}
             />
-          </View>
-          <View style={{paddingTop: 25}}>
-            <Button icon="check" mode="contained" onPress={() => saveReceipt()}>
-              Save Receipt
-            </Button>
-          </View>
-      </ScrollView>
+          
+        </View>
+        
+        <View>
+          <Button icon="check" mode="contained" onPress={() => saveReceipt()}>
+            Save Receipt
+          </Button>
+        </View>
+      </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: 'lightgrey',
       padding: 15
     },
     maininfo: {
       flex: 1
 
     },
-    mainTextInput: {
-      marginTop: 15,
-      marginBottom: 15,
-      marginRight: 5,
-      padding: 5,
-      borderWidth: 1,
-    },
     textInput: {
-      marginTop: 25,
+      borderWidth: 1,
+      padding: 5
     }
   });
 
