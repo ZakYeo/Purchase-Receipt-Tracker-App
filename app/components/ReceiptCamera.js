@@ -11,8 +11,8 @@ import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import * as FileSystem from 'expo-file-system';
 import { ActivityIndicator, MD2Colors } from "react-native-paper";
-import ExtractTextFromImage from '../../ExtractTextFromImage';
-import ExtractData from '../../ExtractData';
+import ExtractTextFromImage from "../functions/ExtractTextFromImage";
+import ExtractData from "../functions/ExtractData";
 
 
 export default function ReceiptCamera( { navigation } ) {

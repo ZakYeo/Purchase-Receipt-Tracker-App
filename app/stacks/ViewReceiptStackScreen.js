@@ -6,7 +6,6 @@ import CameraScreen from '../screens/CameraScreen';
 import ViewReceiptScreen from '../screens/ViewReceiptScreen';
 import constants from '../config/constants';
 import AddReceiptScreen from '../screens/AddReceiptScreen';
-import ReceiptDetailsScreen from '../screens/ReceiptDetailsScreen';
 
 function ViewReceiptStackScreen() {
 
@@ -34,12 +33,6 @@ function ViewReceiptStackScreen() {
         <ViewStack.Screen name="Add" component={AddReceiptScreen} 
         options={({ route }) => ({ 
           title: "Add Receipt",
-          headerStyle: {backgroundColor: colours.primaryCol},
-          headerTintColor: colours.tertiaryCol 
-        })}/>
-        <ViewStack.Screen name="Details" component={ReceiptDetailsScreen} 
-        options={({ route }) => ({ 
-          title: "Receipt Details",
           headerStyle: {backgroundColor: colours.primaryCol},
           headerTintColor: colours.tertiaryCol 
         })}/>

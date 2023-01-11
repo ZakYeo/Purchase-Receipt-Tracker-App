@@ -1,13 +1,15 @@
 
 import React from 'react';
-import { Modal, FAB, Portal } from 'react-native-paper';
+import { Snackbar, FAB, Portal } from 'react-native-paper';
 import pickImageAsync from '../../PickImageAsync';
-import ExtractTextFromImage from '../../ExtractTextFromImage';
-import ExtractData from '../../ExtractData';
-const FABGroup = ( {navigation } ) => {
+import ExtractTextFromImage from '../functions/ExtractTextFromImage';
+import ExtractData from '../functions/ExtractData'
+const FABGroup = ( {navigation, onToggleSnackBar } ) => {
   const [state, setState] = React.useState({ open: false });
+  
 
   const onStateChange = ({ open }) => setState({ open });
+  
 
   const { open } = state;  
 
@@ -15,7 +17,7 @@ const FABGroup = ( {navigation } ) => {
     const img = await pickImageAsync();
 
     if(img == null){
-      console.log("No image chosen.");
+      onToggleSnackBar();
     }else{
       let resp = await ExtractTextFromImage(img.base64);
       navigation.navigate("Add", {recpInfo: ExtractData(resp.data, img.base64)});

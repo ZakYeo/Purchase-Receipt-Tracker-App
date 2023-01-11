@@ -4,7 +4,7 @@ import * as SQLite from 'expo-sqlite';
 import { List, TouchableRipple } from 'react-native-paper';
 
 
-function ReceiptList( { navigation } ){
+function ReceiptList( { setDlgContent, showDialog } ){
 
     const [receipts, setReceipts] = useState("");
 
@@ -20,6 +20,11 @@ function ReceiptList( { navigation } ){
         });
       };
 
+    const handleDlg = (item) => {
+      setDlgContent(item);
+      showDialog();
+    };
+
     getReceipts();
 
     return (
@@ -33,7 +38,7 @@ function ReceiptList( { navigation } ){
             removeClippedSubviews={true}
             renderItem={({ item }) => (
                 <TouchableRipple
-                  onPress={() => navigation.navigate("Details", {store_name: item.store_name})}
+                  onPress={() => handleDlg(item)}
                   rippleColor="rgba(0, 0, 0, .32)"
                 >
                 <List.Item
