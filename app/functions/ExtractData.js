@@ -14,11 +14,11 @@ export default ExtractData = (data, base64) => {
     }
     
     let receiptInformation = {
-        "total_amount": data.totalAmount.data,
-        "tax_amount": data.taxAmount.data,
+        "total_cost": data.totalAmount.data,
+        "total_tax": data.taxAmount.data,
         "date": data.date.data,
-        "merchant": data.merchantName.data,
-        "merchant_address": data.merchantAddress.data,
+        "location_name": data.merchantName.data,
+        "location_address": data.merchantAddress.data,
         "items": {},
         "img": base64
     };

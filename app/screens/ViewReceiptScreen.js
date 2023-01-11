@@ -26,7 +26,7 @@ export default function ViewReceiptScreen( {navigation, route} ) {
         <CustomSnackbar msg={"No photo selected."} visible={visible} onDismissSnackBar={onDismissSnackBar}/>
         <FABGroup navigation={navigation} onToggleSnackBar={onToggleSnackBar}/>
         <ReceiptList setDlgContent={setDlgContent} showDialog={showDialog} />
-        <CustomDialog dlgVisible={dlgVisible} hideDialog={hideDialog} dlgContent={dlgContent}/>
+        <CustomDialog dlgVisible={dlgVisible} hideDialog={hideDialog} dlgContent={dlgContent} navigation={navigation}/>
       </SafeAreaView>
     </Provider>
   );

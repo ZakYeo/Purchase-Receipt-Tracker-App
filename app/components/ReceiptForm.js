@@ -4,31 +4,39 @@ import { Button, TouchableRipple } from 'react-native-paper';
 import * as SQLite from 'expo-sqlite';
 import { Camera } from "expo-camera";
 import InsertReceipt from '../functions/InsertReceipt'
+import EditReceipt from '../functions/EditReceipt';
 
 
 function ReceiptForm({
                       navigation, 
-                      recpInfo={}}){
+                      recpInfo={},
+                    edit}){
 
-
-    const [receiptName, setReceiptName] = useState(recpInfo.merchant);
+    //{"base64": null, "category": "", "date": "2023-01-02T12:00:00.000Z", "id": 1, "location_address": null, "location_name": "Morrisons", "receipt_name": "Morrisons", "total_cost": "5.28", "total_tax": null}
+    const [receiptName, setReceiptName] = useState(recpInfo.receipt_name);
     const [category, setCategory] = useState("");
-    const [totalCost, setTotalCost] = useState(recpInfo.total_amount);
-    const [totalTax, setTotalTax] = useState(recpInfo.tax_amount);
-    const [locationName, setLocationName] = useState(recpInfo.merchant);
-    const [locationAddress, setLocationAddress] = useState(recpInfo.merchant_address);
+    const [totalCost, setTotalCost] = useState(recpInfo.total_cost);
+    const [totalTax, setTotalTax] = useState(recpInfo.total_tax);
+    const [locationName, setLocationName] = useState(recpInfo.location_name);
+    const [locationAddress, setLocationAddress] = useState(recpInfo.location_address);
     const [date, setDate] = useState(recpInfo.date);
-    const [base64, setBase64] = useState(recpInfo.img);
+    const [base64, setBase64] = useState(recpInfo.base64);
 
     const [permission, requestPermission] = Camera.useCameraPermissions();
-    
-    //TODO
-    // Check if manual add supports adding an image now
   
     const db = SQLite.openDatabase('test4.db');
 
     const saveReceipt = () => {
-      InsertReceipt({db, receiptName, category, totalCost, totalTax, locationName, locationAddress, date, base64});
+      if(edit){
+        // Update receipt
+        let id = recpInfo.id;
+        EditReceipt({db, receiptName, category, totalCost, totalTax, locationName, locationAddress, date, base64, id})
+
+      }else{
+        // Insert receipt
+        InsertReceipt({db, receiptName, category, totalCost, totalTax, locationName, locationAddress, date, base64});
+      }
+      
       navigation.navigate("ViewReceipt");
     };
 
@@ -42,9 +50,6 @@ function ReceiptForm({
       if(permission){
         navigation.navigate("Camera");
       }
-      
-      
-
 
     }
 
