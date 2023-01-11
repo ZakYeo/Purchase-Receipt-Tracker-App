@@ -3,6 +3,7 @@ import { StyleSheet, View, ScrollView, TextInput, Image, Dimensions } from 'reac
 import { Button, TouchableRipple } from 'react-native-paper';
 import * as SQLite from 'expo-sqlite';
 import { Camera } from "expo-camera";
+import DateTimePicker from '@react-native-community/datetimepicker';
 import InsertReceipt from '../functions/InsertReceipt'
 import EditReceipt from '../functions/EditReceipt';
 
@@ -14,15 +15,25 @@ function ReceiptForm({
 
     const windowWidth = Dimensions.get('window').width;
     const windowHeight = Dimensions.get('window').height;
-
+    
     const [receiptName, setReceiptName] = useState(recpInfo.receipt_name);
     const [category, setCategory] = useState("");
     const [totalCost, setTotalCost] = useState(recpInfo.total_cost);
     const [totalTax, setTotalTax] = useState(recpInfo.total_tax);
     const [locationName, setLocationName] = useState(recpInfo.location_name);
     const [locationAddress, setLocationAddress] = useState(recpInfo.location_address);
-    const [date, setDate] = useState(recpInfo.date);
+    const [userDate, setUserDate] = useState(recpInfo.date);
     const [base64, setBase64] = useState(recpInfo.base64);
+
+    const [datePickerDate, setDatePickerDate] = useState(new Date());
+
+
+    //const [interpretedDate, setInterpretedDate] = useState(new Date());
+    /*if(recpInfo.date !== undefined){
+      setInterpretedDate(new Date(recpInfo.date).toString());
+    }*/
+
+    const [showDate, setShowDate] = useState(false);
 
     const [permission, requestPermission] = Camera.useCameraPermissions();
   
@@ -32,11 +43,11 @@ function ReceiptForm({
       if(edit){
         // Update receipt
         let id = recpInfo.id;
-        EditReceipt({db, receiptName, category, totalCost, totalTax, locationName, locationAddress, date, base64, id})
+        EditReceipt({db, receiptName, category, totalCost, totalTax, locationName, locationAddress, userDate, base64, id})
 
       }else{
         // Insert receipt
-        InsertReceipt({db, receiptName, category, totalCost, totalTax, locationName, locationAddress, date, base64});
+        InsertReceipt({db, receiptName, category, totalCost, totalTax, locationName, locationAddress, userDate, base64});
       }
       
       navigation.navigate("ViewReceipt");
@@ -54,6 +65,12 @@ function ReceiptForm({
       }
 
     }
+    const handleDateChange = (_, datePicked) => {
+      setShowDate(false);
+      setDatePickerDate(new Date(datePicked));
+      setUserDate(datePickerDate.toDateString());
+      
+    };
 
     
     
@@ -121,12 +138,16 @@ function ReceiptForm({
                value={locationAddress}
                onChangeText={setLocationAddress}
             />
-            <TextInput 
-               style={styles.textInput}
-               placeholder="Date"
-               value={date}
-               onChangeText={setDate}
-            />
+            <View>
+              <TextInput 
+                style={styles.textInput}
+                placeholder="Date"
+                value={userDate}
+                onChangeText={setUserDate}
+              /> 
+              <Button style={{alignItems: 'flex-start'}}icon="calendar" mode="text" onPress={() => setShowDate(true)}>Tap to select date</Button>
+            </View>
+            {showDate ? <DateTimePicker value={datePickerDate} onChange={handleDateChange}  /> : <></>}
           
         </View>
         

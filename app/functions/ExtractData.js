@@ -7,11 +7,6 @@ export default ExtractData = (data, base64) => {
     if(data.taxAmount.data !== undefined){
         data.taxAmount.data = data.taxAmount.data.toString();
     }
-    if(data.date.data !== undefined){
-        date = new Date(data.date.data).toDateString();
-    }else{
-        date = "";
-    }
     
     let receiptInformation = {
         "total_cost": data.totalAmount.data,
