@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import ReceiptForm from '../components/ReceiptForm';
+
+import { useIsFocused } from '@react-navigation/native';
 function AddReceiptScreen({navigation, route}) {
 
   
@@ -9,9 +11,12 @@ function AddReceiptScreen({navigation, route}) {
     route.params.recpInfo = {};
   }
 
+  const isFocused = useIsFocused(); 
+
+
     return (
       <View style={styles.container}>
-        <ReceiptForm navigation={navigation} receiptInfo={route.params.recpInfo}/>
+        { isFocused && <ReceiptForm navigation={navigation} recpInfo={route.params.recpInfo}/>}
       </View>
     );
 }

@@ -13,9 +13,9 @@ const CustomDialog = ({dlgVisible, hideDialog, dlgContent}) => {
     };
 
     return (
-        <Dialog visible={dlgVisible} onDismiss={hideDialog}>
+        <Dialog visible={dlgVisible} onDismiss={hideDialog} >
             <Dialog.Title>{dlgContent.receipt_name}</Dialog.Title>
-            <Dialog.Content>
+            <Dialog.Content style={{height: '50%'}}>
                 <ScrollView>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 15}}>
                         <Text style={{fontSize: 18}}>Total Cost</Text>
@@ -30,11 +30,9 @@ const CustomDialog = ({dlgVisible, hideDialog, dlgContent}) => {
                         <Text style={{fontSize: 18}}>{dlgContent.category}</Text>
                     </View>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 15}}>
-                        <Text style={{fontSize: 18}}>Location Name</Text>
                         <Text style={{fontSize: 18}}>{dlgContent.location_name}</Text>
                     </View>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 15}}>
-                        <Text style={{fontSize: 18}}>Location Address</Text>
                         <Text style={{fontSize: 18}}>{dlgContent.location_address}</Text>
                     </View>
                     <View style={{justifyContent: 'center',alignItems: 'center'}}>
@@ -57,8 +55,8 @@ const CustomDialog = ({dlgVisible, hideDialog, dlgContent}) => {
 const styles = StyleSheet.create({
 
     recpImg: {
-      width: 150,
-      height: 150,
+      width: '100%',
+      height: 300,
     }
   });
 

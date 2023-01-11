@@ -1,24 +1,29 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, ScrollView, TextInput, Image } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, TouchableRipple } from 'react-native-paper';
 import * as SQLite from 'expo-sqlite';
+import { Camera } from "expo-camera";
 import InsertReceipt from '../functions/InsertReceipt'
 
 
 function ReceiptForm({
                       navigation, 
-                      receiptInfo={}}){
+                      recpInfo={}}){
 
 
-    const [receiptName, setReceiptName] = useState(receiptInfo.merchant);
+    const [receiptName, setReceiptName] = useState(recpInfo.merchant);
     const [category, setCategory] = useState("");
-    const [totalCost, setTotalCost] = useState(receiptInfo.total_amount);
-    const [totalTax, setTotalTax] = useState(receiptInfo.tax_amount);
-    const [locationName, setLocationName] = useState(receiptInfo.merchant);
-    const [locationAddress, setLocationAddress] = useState(receiptInfo.merchant_address);
-    const [date, setDate] = useState(receiptInfo.date);
-    const [base64, setBase64] = useState(receiptInfo.img);
+    const [totalCost, setTotalCost] = useState(recpInfo.total_amount);
+    const [totalTax, setTotalTax] = useState(recpInfo.tax_amount);
+    const [locationName, setLocationName] = useState(recpInfo.merchant);
+    const [locationAddress, setLocationAddress] = useState(recpInfo.merchant_address);
+    const [date, setDate] = useState(recpInfo.date);
+    const [base64, setBase64] = useState(recpInfo.img);
 
+    const [permission, requestPermission] = Camera.useCameraPermissions();
+    
+    //TODO
+    // Check if manual add supports adding an image now
   
     const db = SQLite.openDatabase('test4.db');
 
@@ -27,11 +32,27 @@ function ReceiptForm({
       navigation.navigate("ViewReceipt");
     };
 
+    const openCamera = async () => {
+      if (!permission.granted) {
+        // Camera permissions are not granted yet
+        requestPermission();
+        
+      }
+
+      if(permission){
+        navigation.navigate("Camera");
+      }
+      
+      
+
+
+    }
+
     
     
     return (
       <ScrollView style={styles.container}>
-        <View style={{flexDirection: "row"}}>
+        <View style={{flexDirection: "row", flex: 1}}>
           <View style={styles.maininfo}>
             <TextInput
               style={styles.mainTextInput}
@@ -51,7 +72,17 @@ function ReceiptForm({
                       source={{ uri: `data:image/png;base64,${base64}`}}
                       style={{flex: 1.1, borderWidth: 3, marginLeft: 10, marginRight: 10}}
                     />
-                  : <View style={{flex: 1.1, borderWidth: 1, marginLeft: 10, marginRight: 10}} />}
+                  : <View style={{flex: 1, borderWidth: 1}} >
+                      <TouchableRipple
+                        onPress={() => openCamera()}
+                        rippleColor="rgba(0, 0, 0, .32)"
+                      >
+                        <Image
+                          source={require('../assets/no_photo.jpg')}
+                          style={{width: '100%', height: '100%'}} 
+                        />
+                      </TouchableRipple>
+                    </View>}
         </View>
         <View style={{flexDirection: "row", justifyContent: 'space-between'}}>
           <TextInput
@@ -103,14 +134,15 @@ const styles = StyleSheet.create({
       padding: 15
     },
     maininfo: {
-      flex: 1.2
+      flex: 1
 
     },
     mainTextInput: {
       marginTop: 15,
       marginBottom: 15,
+      marginRight: 5,
       padding: 5,
-      borderWidth: 1
+      borderWidth: 1,
     },
     textInput: {
       marginTop: 25,
