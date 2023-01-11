@@ -7,10 +7,10 @@ import {
   StyleSheet,
   Button
 } from "react-native";
-import { Camera } from "expo-camera";
+import { Camera, FlashMode } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import * as FileSystem from 'expo-file-system';
-import { ActivityIndicator, MD2Colors } from "react-native-paper";
+import { ActivityIndicator, MD2Colors,IconButton, MD3Colors } from "react-native-paper";
 import ExtractTextFromImage from "../functions/ExtractTextFromImage";
 import ExtractData from "../functions/ExtractData";
 
@@ -22,8 +22,18 @@ export default function ReceiptCamera( { navigation } ) {
 
   const [previewVisible, setPreviewVisible] = useState(false);
   const [capturedImage, setCapturedImage] = useState(null);
-
   const [loading, setLoading] = useState(false);
+
+  const [flash, setFlash] = useState(FlashMode.off);
+  const toggleFlash = () => {
+    if(flash == FlashMode.on){
+      setFlash(FlashMode.off);
+    }else{
+      setFlash(FlashMode.on);
+    }
+  }
+
+  
 
   let camera = useRef(null);
 
@@ -102,6 +112,7 @@ export default function ReceiptCamera( { navigation } ) {
         ref={(ref) => {
           camera = ref;
         }}
+        flashMode={flash}
       >
         
         <View style={styles.cameraView}>
@@ -116,19 +127,30 @@ export default function ReceiptCamera( { navigation } ) {
                     : Camera.Constants.Type.back
                 );
               }}
-              style={styles.buttonView}
             >
-              <Text style={{ fontSize: 20 }}>
-                Flip Camera
-              </Text>
+              <IconButton
+                icon="camera-switch"
+                iconColor={"white"}
+                size={30}
+              />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={takePicture}
-              style={styles.buttonView}
             >
-              <Text style={{ fontSize: 20 }}>
-                Take Photo
-              </Text>
+              <IconButton
+                icon="camera"
+                iconColor={"white"}
+                size={50}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={toggleFlash}
+            >
+              <IconButton
+                icon={flash == FlashMode.on ? "flash-alert" : "flash"}
+                iconColor={"white"}
+                size={30}
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -143,13 +165,12 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: "transparent",
     flexDirection: "column",
-    alignItems: "center",
     justifyContent: "flex-end",
   },
   menuButtons: {
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
+    paddingBottom: 20
   },
   buttonView: {
     flex: 1,
