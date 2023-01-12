@@ -15,7 +15,7 @@ export default function AddReceiptStackScreen() {
       <AddStack.Navigator>
         <AddStack.Screen name="AddReceipt"
         options={({ navigation }) => ({
-          title: constants.map_title,
+          title: "Add Receipts",
           headerTintColor: "white",
           headerStyle: {backgroundColor: colours.headerCol}
         })}

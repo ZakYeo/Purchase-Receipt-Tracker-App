@@ -18,7 +18,7 @@ export default function MainNavigationStack(){
             headerShown: false,
             tabBarStyle: {backgroundColor: colours.headerCol}
           })}>
-            <Stack.Screen name={constants.nav_list}>
+            <Stack.Screen name={"View"}>
           {(props) => <ViewReceiptStackScreen  {...props} /> }
           </Stack.Screen>
 
