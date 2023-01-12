@@ -14,7 +14,6 @@ import { ActivityIndicator, MD2Colors,IconButton, MD3Colors } from "react-native
 import ExtractTextFromImage from "../functions/ExtractTextFromImage";
 import ExtractData from "../functions/ExtractData";
 
-
 export default function ReceiptCamera( { navigation } ) {
 
   const [permission, requestPermission] = Camera.useCameraPermissions();
@@ -55,7 +54,13 @@ export default function ReceiptCamera( { navigation } ) {
       encoding: FileSystem.EncodingType.Base64,
     })
     let resp = await ExtractTextFromImage(imageBase64);
-    navigation.navigate("Add", {title: "Create Receipt",recpInfo: ExtractData(resp.data, imageBase64)});
+    if(resp === "error"){
+      //Error has occurred
+      console.log("A networking error has occurred. Check API Key or try again later.");
+    }else{
+      navigation.navigate("Add", {title: "Create Receipt",recpInfo: ExtractData(resp.data, imageBase64)});
+    }
+    
     setPreviewVisible(false);
     setCapturedImage(null);
     setLoading(false);
