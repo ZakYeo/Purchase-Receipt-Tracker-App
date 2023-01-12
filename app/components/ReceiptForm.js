@@ -38,7 +38,7 @@ function ReceiptForm({
 
     const [permission, requestPermission] = Camera.useCameraPermissions();
   
-    const db = SQLite.openDatabase('test4.db');
+    const db = SQLite.openDatabase('receipts.db');
 
     const saveReceipt = () => {
       if(edit){

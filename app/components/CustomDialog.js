@@ -5,11 +5,12 @@ import * as SQLite from 'expo-sqlite';
 const CustomDialog = ({dlgVisible, hideDialog, dlgContent, navigation}) => {
 
     const handleDelete = () => {
-        const db = SQLite.openDatabase('test4.db');
+        const db = SQLite.openDatabase('receipts.db');
         let id = dlgContent.id;
         DeleteReceipt({db, id});
         hideDialog();
     };
+
     
 
     return (

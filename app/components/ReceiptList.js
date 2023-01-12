@@ -8,22 +8,33 @@ function ReceiptList( { setDlgContent, showDialog } ){
 
     const [receipts, setReceipts] = useState("");
 
-    const db = SQLite.openDatabase('test4.db');
+    const db = SQLite.openDatabase('receipts.db');
 
     const getReceipts = () => {
         db.transaction(tx => {
           tx.executeSql(
-            'select * from receipts',
+            'select id,location_address,location_name,receipt_name,total_cost,total_tax,category,date from receipts',
             [],
             (_, { rows: { _array } }) => setReceipts(_array)
           );
         });
       };
 
-    const handleDlg = (item) => {
+    const handleDlg = async (item) => {
+      db.transaction(tx => {
+          tx.executeSql(
+            'select base64 from receipts WHERE id=?',
+            [item.id],
+            (_, { rows: { _array } }) => handleDlg2(item, _array[0].base64)
+          );
+        })
+      
+    };
+    const handleDlg2 = (item, base64) => {
+      item.base64 = base64;
       setDlgContent(item);
       showDialog();
-    };
+    }
 
     getReceipts();
 
