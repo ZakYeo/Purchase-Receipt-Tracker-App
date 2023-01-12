@@ -55,6 +55,7 @@ function ReceiptForm({
     };
 
     const openCamera = async () => {
+      if(edit){return;}
       if (!permission.granted) {
         // Camera permissions are not granted yet
         requestPermission();
