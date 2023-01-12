@@ -19,7 +19,7 @@ export default ExtractTextFromImage = async (base64) => {
             "contentType":"image/jpeg"},
             config
     ).then(res => resp = res)
-    .catch(err => resp = err);
+    .catch(err => resp = "error");
 
     return resp;
 }
