@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import { StyleSheet, SafeAreaView, Image, Text } from 'react-native';
 import ReceiptList from '../components/ReceiptList';
 import colours from '../config/colours';
@@ -7,6 +7,8 @@ import FABGroup from '../components/FABGroup';
 
 import CustomSnackbar from '../components/CustomSnackbar';
 import CustomDialog from '../components/CustomDialog';
+
+const CustomDlgMemo = memo(CustomDialog);
 export default function ViewReceiptScreen( {navigation, route} ) {
 
   // Pop-up Snackbar State
@@ -26,7 +28,7 @@ export default function ViewReceiptScreen( {navigation, route} ) {
         <CustomSnackbar msg={"No photo selected."} visible={visible} onDismissSnackBar={onDismissSnackBar}/>
         <FABGroup navigation={navigation} onToggleSnackBar={onToggleSnackBar}/>
         <ReceiptList setDlgContent={setDlgContent} showDialog={showDialog} />
-        <CustomDialog dlgVisible={dlgVisible} hideDialog={hideDialog} dlgContent={dlgContent} navigation={navigation}/>
+        <CustomDlgMemo dlgVisible={dlgVisible} hideDialog={hideDialog} dlgContent={dlgContent} navigation={navigation}/>
       </SafeAreaView>
     </Provider>
   );
