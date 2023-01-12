@@ -6,6 +6,7 @@ import { Camera } from "expo-camera";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import InsertReceipt from '../functions/InsertReceipt'
 import EditReceipt from '../functions/EditReceipt';
+import colours from '../config/colours';
 
 
 function ReceiptForm({
@@ -164,14 +165,14 @@ function ReceiptForm({
                 value={userDate}
                 onChangeText={setUserDate}
               /> 
-              <Button style={{alignItems: 'flex-start'}}icon="calendar" mode="text" onPress={() => setShowDate(true)}>Tap to select date</Button>
+              <Button textColor={colours.tertiaryCol} style={{alignItems: 'flex-start'}}icon="calendar" mode="text" onPress={() => setShowDate(true)}>Tap to select date</Button>
             </View>
             {showDate ? <DateTimePicker value={datePickerDate} onChange={handleDateChange}  /> : <></>}
           
         </View>
         
         <View>
-          <Button icon="check" mode="contained" onPress={() => saveReceipt()}>
+          <Button buttonColor={colours.tertiaryCol}icon="check" mode="contained" onPress={() => saveReceipt()}>
             Save Receipt
           </Button>
         </View>
@@ -182,7 +183,7 @@ function ReceiptForm({
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: 'lightgrey',
+      backgroundColor: colours.backgroundCol,
       padding: 15
     },
     maininfo: {

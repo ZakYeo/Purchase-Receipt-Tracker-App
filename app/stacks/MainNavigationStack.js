@@ -1,26 +1,27 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ViewReceiptStackScreen from './ViewReceiptStackScreen.js';
 import colours from '../config/colours';
 import constants from '../config/constants.js';
-
-
+import CustomDrawer from '../components/CustomDrawer.js';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 export default function MainNavigationStack(){
 
-    const Tab = createNativeStackNavigator();
+    const Stack = createNativeStackNavigator();
+    
 
     return (
-        <Tab.Navigator screenOptions={({ route }) => ({
-            tabBarActiveTintColor: colours.secondaryCol,
-            tabBarInactiveTintColor: colours.tertiaryCol,
+        <Stack.Navigator 
+        drawerContent={(props) => <CustomDrawer {...props} />}
+        screenOptions={({ route }) => ({
             headerShown: false,
-            tabBarStyle: {backgroundColor: colours.primaryCol}
+            tabBarStyle: {backgroundColor: colours.headerCol}
           })}>
-            <Tab.Screen name={constants.nav_list}>
-          {(props) => <ViewReceiptStackScreen {...props} /> }
-          </Tab.Screen>
+            <Stack.Screen name={constants.nav_list}>
+          {(props) => <ViewReceiptStackScreen  {...props} /> }
+          </Stack.Screen>
 
-        </Tab.Navigator>
+        </Stack.Navigator>
     )
 }

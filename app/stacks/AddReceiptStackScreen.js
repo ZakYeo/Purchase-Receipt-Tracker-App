@@ -16,8 +16,8 @@ export default function AddReceiptStackScreen() {
         <AddStack.Screen name="AddReceipt"
         options={({ navigation }) => ({
           title: constants.map_title,
-          headerTintColor: colours.tertiaryCol,
-          headerStyle: {backgroundColor: colours.primaryCol}
+          headerTintColor: "white",
+          headerStyle: {backgroundColor: colours.headerCol}
         })}
         >
           {(props) => <AddReceiptScreen {...props}></AddReceiptScreen> }

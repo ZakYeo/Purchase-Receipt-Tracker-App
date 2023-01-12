@@ -6,8 +6,8 @@ import CameraScreen from '../screens/CameraScreen';
 import ViewReceiptScreen from '../screens/ViewReceiptScreen';
 import constants from '../config/constants';
 import AddReceiptScreen from '../screens/AddReceiptScreen';
-
-function ViewReceiptStackScreen() {
+import ViewReceiptsWithDrawer from './ViewReceiptsWithDrawer';
+function ViewReceiptStackScreen({navigation}) {
 
   const ViewStack = createNativeStackNavigator();
   
@@ -16,16 +16,17 @@ function ViewReceiptStackScreen() {
       <ViewStack.Screen name="ViewReceipt"
       options={({ navigation }) => ({
         title: "My Receipts",
-        headerTintColor: colours.tertiaryCol,
-        headerStyle: {backgroundColor: colours.primaryCol}
+        headerTintColor: "white",
+        headerStyle: {backgroundColor: colours.headerCol},
+        headerShown: false
       })}
       >
-        {(props) => <ViewReceiptScreen {...props}></ViewReceiptScreen> }
+        {(props) => <ViewReceiptsWithDrawer {...props}></ViewReceiptsWithDrawer> }
       </ViewStack.Screen>
       <ViewStack.Screen name="Camera" 
         options={({ route }) => ({ 
           title: "Camera Add",
-          headerStyle: {backgroundColor: colours.primaryCol},
+          headerStyle: {backgroundColor: colours.headerCol},
           headerTintColor: colours.tertiaryCol 
         })}>
           {(props) => <CameraScreen {...props}></CameraScreen> }
@@ -33,8 +34,8 @@ function ViewReceiptStackScreen() {
         <ViewStack.Screen name="Add" component={AddReceiptScreen} 
         options={({ route }) => ({ 
           title: route.params.title,
-          headerStyle: {backgroundColor: colours.primaryCol},
-          headerTintColor: colours.tertiaryCol 
+          headerStyle: {backgroundColor: colours.headerCol},
+          headerTintColor: "white"
         })}/>
     </ViewStack.Navigator>
   );

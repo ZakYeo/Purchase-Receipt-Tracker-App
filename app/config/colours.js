@@ -1,5 +1,6 @@
 export default {
-    primaryCol: "#286168",
-    secondaryCol: "#F0F0F0",
-    tertiaryCol: "#FAF8F8",
+    headerCol: "#804768",
+    backgroundCol: "white",
+    tertiaryCol: "#827191",
+    highlightCol: "#B4A3C3"
 }

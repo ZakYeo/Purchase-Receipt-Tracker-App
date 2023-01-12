@@ -4,6 +4,7 @@ import { Snackbar, FAB, Portal } from 'react-native-paper';
 import pickImageAsync from '../functions/PickImageAsync';
 import ExtractTextFromImage from '../functions/ExtractTextFromImage';
 import ExtractData from '../functions/ExtractData';
+import colours from '../config/colours';
 const FABGroup = ( {navigation, onToggleSnackBar } ) => {
   const [state, setState] = React.useState({ open: false });
   
@@ -31,20 +32,28 @@ const FABGroup = ( {navigation, onToggleSnackBar } ) => {
         <FAB.Group
           open={open}
           visible
+          fabStyle={{backgroundColor: colours.tertiaryCol}}
+          color={"black"}
           icon={open ? 'close' : 'plus'}
           actions={[
             { 
               icon: 'pencil-plus', 
               label: 'Add Receipt [Manual]',
+              color: "black",
+              style: {backgroundColor: colours.tertiaryCol},
               onPress: () => navigation.navigate("Add", {title: "Create Receipt"}) },
             {
               icon: 'camera-plus',
               label: 'Add Receipt [Camera]',
+              color: "black",
+              style: {backgroundColor: colours.tertiaryCol},
               onPress: () => navigation.navigate("Camera"),
             },
             {
               icon: 'image-plus',
               label: 'Choose Receipt [Library]',
+              color: "black",
+              style: {backgroundColor: colours.tertiaryCol},
               onPress: () => chooseReceiptFromLibrary(),
             }
           ]}

@@ -35,7 +35,7 @@ export default function ViewReceiptScreen( {navigation, route} ) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colours.secondaryCol,
+    backgroundColor: colours.backgroundCol,
     flex: 1,
     borderTopWidth: 1,
     borderBottomWidth: 1,
