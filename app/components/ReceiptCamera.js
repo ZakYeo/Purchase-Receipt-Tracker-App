@@ -57,6 +57,7 @@ export default function ReceiptCamera( { navigation } ) {
     if(resp === "error"){
       //Error has occurred
       console.log("A networking error has occurred. Check API Key or try again later.");
+      navigation.navigate("ViewReceipt");
     }else{
       navigation.navigate("Add", {title: "Create Receipt",recpInfo: ExtractData(resp.data, imageBase64)});
     }
