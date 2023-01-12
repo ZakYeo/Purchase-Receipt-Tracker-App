@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, ScrollView, TextInput, Image, Dimensions } from 'react-native';
+import { StyleSheet, View, ScrollView, TextInput, Image, Dimensions, Text } from 'react-native';
 import { Button, TouchableRipple } from 'react-native-paper';
 import * as SQLite from 'expo-sqlite';
 import { Camera } from "expo-camera";
@@ -13,7 +13,7 @@ function ReceiptForm({
                       recpInfo={},
                     edit}){
 
-    const windowWidth = Dimensions.get('window').width;
+    // Use for relative sizing based on screen size:
     const windowHeight = Dimensions.get('window').height;
     
     const [receiptName, setReceiptName] = useState(recpInfo.receipt_name);
@@ -78,18 +78,24 @@ function ReceiptForm({
       <View style={styles.container}>
         <View style={{flexDirection: "row", flex: 1, height: windowHeight*0.25}}>
           <View style={{flex: 1, justifyContent: 'space-evenly', marginRight: 10}}>
-            <TextInput
-              style={styles.textInput}
-              placeholder="Receipt Name"
-              value={receiptName}
-              onChangeText={setReceiptName}
-            />
-            <TextInput
-              style={styles.textInput}
-              placeholder="Category"
-              value={category}
-              onChangeText={setCategory}
-            />
+            <View>
+              <Text style={styles.textLabel}>Receipt Name</Text>
+              <TextInput
+                style={styles.textInput}
+                placeholder="e.g Small Tesco Shop"
+                value={receiptName}
+                onChangeText={setReceiptName}
+              />
+            </View>
+            <View>
+              <Text style={styles.textLabel}>Category</Text>
+              <TextInput
+                style={styles.textInput}
+                placeholder="e.g Grocery"
+                value={category}
+                onChangeText={setCategory}
+              />
+            </View>
           </View>
           <View style={{flex: 1, borderWidth: 1}} >
             <TouchableRipple
@@ -113,35 +119,48 @@ function ReceiptForm({
         </View>
         <View style={{justifyContent: 'space-evenly', height: windowHeight*0.55}}>
           <View style={{flexDirection: "row", justifyContent: 'space-between'}}>
-            <TextInput
-                  style={[styles.textInput,{width: '45%'}]}
-                  placeholder="Total Cost"
-                  value={totalCost}
-                  onChangeText={setTotalCost}
-                />
-            <TextInput
-                style={[styles.textInput,{width: '45%'}]}
-                placeholder="Total Tax"
+            <View style={{flex: 1}}>
+              <Text style={[styles.textLabel]}>Total Cost</Text>
+              <TextInput
+                style={[styles.textInput,{width: '95%'}]}
+                placeholder="e.g 11.00"
+                value={totalCost}
+                onChangeText={setTotalCost}
+              />
+            </View>
+            <View style={{flex: 1}}>
+              <Text style={[styles.textLabel]}>Total Tax</Text>
+              <TextInput
+                style={[styles.textInput,{width: '100%'}]}
+                placeholder="e.g 1.50"
                 value={totalTax}
                 onChangeText={setTotalTax}
               />
+            </View>
           </View>
-          <TextInput 
-               style={styles.textInput}
-               placeholder="Location Name"
-               value={locationName}
-               onChangeText={setLocationName}
+          <View>
+            <Text style={[styles.textLabel]}>Location Name</Text>
+            <TextInput 
+              style={styles.textInput}
+              placeholder="e.g Tesco"
+              value={locationName}
+              onChangeText={setLocationName}
             />
+          </View>
+          <View>
+            <Text style={[styles.textLabel]}>Location Address</Text>
             <TextInput 
                style={styles.textInput}
-               placeholder="Location Address"
+               placeholder="e.g Winton"
                value={locationAddress}
                onChangeText={setLocationAddress}
             />
+          </View>
             <View>
+            <Text style={[styles.textLabel]}>Date</Text>
               <TextInput 
                 style={styles.textInput}
-                placeholder="Date"
+                placeholder="e.g Thu Jaun 12 2023"
                 value={userDate}
                 onChangeText={setUserDate}
               /> 
@@ -173,6 +192,11 @@ const styles = StyleSheet.create({
     textInput: {
       borderWidth: 1,
       padding: 5
+    },
+    textLabel: {
+      color: 'black',
+      fontWeight: 'bold',
+      fontSize: 17
     }
   });
 
