@@ -1,12 +1,17 @@
 
 import React from 'react';
-import { Snackbar, FAB, Portal } from 'react-native-paper';
+import { FAB, Portal } from 'react-native-paper';
 import pickImageAsync from '../functions/PickImageAsync';
 import ExtractTextFromImage from '../functions/ExtractTextFromImage';
 import ExtractData from '../functions/ExtractData';
 import colours from '../config/colours';
+
+import { Camera } from "expo-camera";
+
 const FABGroup = ( {navigation, onToggleSnackBar } ) => {
   const [state, setState] = React.useState({ open: false });
+
+  const [permission, requestPermission] = Camera.useCameraPermissions();
   
 
   const onStateChange = ({ open }) => setState({ open });
@@ -24,6 +29,16 @@ const FABGroup = ( {navigation, onToggleSnackBar } ) => {
       navigation.navigate("Add", {title: "Create Receipt",recpInfo: ExtractData(resp.data, img.base64)});
     }
   };
+
+  const checkPermissionsBeforeCamera = async () => {
+    if(!permission.granted){
+      requestPermission();
+    }
+
+    if(permission){
+      navigation.navigate("Camera")      
+    }
+  }
 
 
   
@@ -47,7 +62,7 @@ const FABGroup = ( {navigation, onToggleSnackBar } ) => {
               label: 'Add Receipt [Camera]',
               color: "black",
               style: {backgroundColor: colours.tertiaryCol},
-              onPress: () => navigation.navigate("Camera"),
+              onPress: async () => await checkPermissionsBeforeCamera(),
             },
             {
               icon: 'image-plus',
