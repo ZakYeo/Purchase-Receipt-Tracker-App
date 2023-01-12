@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView, Text } from 'react-native';
-
+import colours from '../config/colours';
 function AboutScreen({navigation, route}) {
  
   
@@ -14,7 +14,7 @@ function AboutScreen({navigation, route}) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'lightgrey'
+    backgroundColor: colours.backgroundCol
   }
 });
 
