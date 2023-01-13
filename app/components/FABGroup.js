@@ -50,10 +50,10 @@ const FABGroup = ( {navigation, onToggleSnackBar } ) => {
   const checkPermissionsBeforeCamera = async () => {
     if(!permission.granted){
       //Ask for permission before opening camera
-      requestPermission();
+      await requestPermission();
     }
 
-    if(permission){
+    if(permission.granted){
       navigation.navigate("Camera")      
     }
   }
