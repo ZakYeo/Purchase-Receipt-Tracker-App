@@ -4,10 +4,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import * as SQLite from 'expo-sqlite';
 import MainNavigationStack from './app/stacks/MainNavigationStack';
 
-
-import ViewReceiptStackScreen from './app/stacks/ViewReceiptStackScreen';
-
-
 export default function App() {
   
   const db = SQLite.openDatabase('receipts.db');
@@ -23,31 +19,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-//TODO
-/*
-
-CODE COMMENTS + DOCSTRINGS
-CONSTANTS.JS + COLOURS.JS FILE????
-Drawer NAvigation account page
-  Expense Analysis
-  About
-  Settings
-
-check app with no perms
-Error handling when bad response from API
-Edit receipt -> Fix  photo changing
-
-search receipts? filter receipts?
-three dots in top corner -> compact vs verbose? duplicate / delete?
-
-Notifications based on location? (in settings page?)
-
-
-
-Settings?:
-  Crop / Edit photos when choosing from library
-  context-based notifications
-  permission sliders for media and camera?
-  
-*/
