@@ -30,30 +30,29 @@ const CustomDialog = ({dlgVisible, hideDialog, dlgContent, navigation}) => {
             <Dialog.Title>{dlgContent.receipt_name}</Dialog.Title>
             <Dialog.Content style={{height: '50%'}}>
                 <ScrollView>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 15}}>
+                    {dlgContent.total_cost ? <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 15}}>
                         <Text style={{fontSize: 18}}>Total Cost</Text>
                         <Text style={{fontSize: 18}}>£{dlgContent.total_cost}</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 15}}>
+                    </View> : <></>}
+                    {dlgContent.total_tax ? <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 15}}>
                         <Text style={{fontSize: 18}}>Total Tax</Text>
                         <Text style={{fontSize: 18}}>£{dlgContent.total_tax}</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 15}}>
+                    </View> : <></>}
+                    {dlgContent.category ? <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 15}}>
                         <Text style={{fontSize: 18}}>Category</Text>
                         <Text style={{fontSize: 18}}>{dlgContent.category}</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 15}}>
+                    </View> : <></>}
+                    {dlgContent.location_name ? <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 15}}>
                         <Text style={{fontSize: 18}}>{dlgContent.location_name}</Text>
-                    </View>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 15}}>
+                    </View> : <></>}
+                    {dlgContent.location_address ? <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingBottom: 15}}>
                         <Text style={{fontSize: 18}}>{dlgContent.location_address}</Text>
-                    </View>
-                    <View style={{justifyContent: 'center',alignItems: 'center'}}>
-                    {dlgContent.base64 ? <Image
+                    </View> : <></>}
+                    {dlgContent.base64 ? <View style={{justifyContent: 'center',alignItems: 'center'}}>
+                    <Image
                       source={{ uri: `data:image/png;base64,${dlgContent.base64}`}}
                       style={styles.recpImg}
-                    /> : <></>}
-                        </View>
+                    /></View> : <></>}
                 </ScrollView>
             </Dialog.Content>
             <Dialog.Actions>
