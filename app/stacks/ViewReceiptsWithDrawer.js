@@ -4,9 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import ViewReceiptScreen from '../screens/ViewReceiptScreen';
 import CustomDrawerContent from '../components/CustomDrawer';
 import colours from '../config/colours';
-import ExpenseAnalysis from '../screens/ExpenseAnalysis';
 import AboutScreen from '../screens/AboutScreen';
-import SettingsScreen from '../screens/SettingsScreen';
 
 /**
  * Allows for drawer navigation in the View Receipt
@@ -27,19 +25,9 @@ export default function ViewReceiptsWithDrawer({props}) {
             <Drawer.Screen {...props} name="ViewReceiptDrawerScreen" component={ViewReceiptScreen}/>
             <Drawer.Screen {...props} 
             options={{
-                title: "Expense Analysis"
-              }}
-            name="ExpenseAnalysisScreen" component={ExpenseAnalysis}/>
-            <Drawer.Screen {...props} 
-            options={{
                 title: "About"
               }}
             name="AboutScreen" component={AboutScreen}/>
-            <Drawer.Screen {...props} 
-            options={{
-                title: "Settings"
-              }}
-            name="SettingsScreen" component={SettingsScreen}/>
         </Drawer.Navigator>
       
     );

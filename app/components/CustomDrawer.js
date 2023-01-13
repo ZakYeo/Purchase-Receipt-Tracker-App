@@ -19,7 +19,9 @@ export default function CustomDrawer({navigation}) {
 
     const handleTransition = (act, screen) => {
         setActive(act);
-        navigation.navigate(screen);
+        if(screen !== ""){
+            navigation.navigate(screen);
+        }
     }
 
 
@@ -42,7 +44,7 @@ export default function CustomDrawer({navigation}) {
                     label="Expense Analysis"
                     icon="finance"
                     active={active === 'second'}
-                    onPress={() => handleTransition("second", "ExpenseAnalysisScreen")}
+                    onPress={() => handleTransition("second", "")}
                 />
                 </Drawer.Section>
                 <Drawer.Section>
@@ -56,7 +58,7 @@ export default function CustomDrawer({navigation}) {
                     label="Settings"
                     icon="cog"
                     active={active === 'fourth'}
-                    onPress={() => handleTransition("fourth", "SettingsScreen")}
+                    onPress={() => handleTransition("fourth", "")}
                 />
                 </Drawer.Section>
             </>
