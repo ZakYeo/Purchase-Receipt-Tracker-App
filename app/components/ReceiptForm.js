@@ -34,7 +34,7 @@ function ReceiptForm({
     const [totalTax, setTotalTax] = useState(recpInfo.total_tax);
     const [locationName, setLocationName] = useState(recpInfo.location_name);
     const [locationAddress, setLocationAddress] = useState(recpInfo.location_address);
-    const [userDate, setUserDate] = useState(recpInfo.date);
+    const [userDate, setUserDate] = useState();
     const [base64, setBase64] = useState(recpInfo.base64);
 
     const [datePickerDate, setDatePickerDate] = useState(new Date());
@@ -63,9 +63,9 @@ function ReceiptForm({
       if(edit){return;}
       if (!permission.granted) {
         // Camera permissions are not granted yet
-        requestPermission();
+        await requestPermission();
       }
-      if(permission){
+      if(permission.granted){
         navigation.navigate("Camera");
       }
 
