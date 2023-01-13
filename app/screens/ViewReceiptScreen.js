@@ -1,15 +1,25 @@
-import React, {memo} from 'react';
-import { StyleSheet, SafeAreaView, Image, Text } from 'react-native';
-import ReceiptList from '../components/ReceiptList';
-import colours from '../config/colours';
-import { Provider, Dialog, Button} from 'react-native-paper';
-import FABGroup from '../components/FABGroup';
+import React, { memo } from 'react';
+import { StyleSheet, SafeAreaView } from 'react-native';
+import { Provider } from 'react-native-paper';
 
+import ReceiptList from '../components/ReceiptList';
+import FABGroup from '../components/FABGroup';
 import CustomSnackbar from '../components/CustomSnackbar';
 import CustomDialog from '../components/CustomDialog';
 
+import colours from '../config/colours';
+
+//Memo for a performance boost (no unnecessary rerenders)
 const CustomDlgMemo = memo(CustomDialog);
-export default function ViewReceiptScreen( {navigation, route} ) {
+
+/**
+   * Main screen holds the receipt list
+   * From here you can navigate using the drawer, or FABGroup
+   * You can press a list item for a detailed popup
+   * You can also see a snackbar if using the imagepicker and don't choose an image
+   * @param {Object} navigation Used to navigate between screens.  
+*/
+export default function ViewReceiptScreen( {navigation} ) {
 
   // Pop-up Snackbar State
   const [visible, setVisible] = React.useState(false);

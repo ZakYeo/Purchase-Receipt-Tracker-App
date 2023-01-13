@@ -1,11 +1,15 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import ViewReceiptStackScreen from './ViewReceiptStackScreen.js';
-import colours from '../config/colours';
-import constants from '../config/constants.js';
 import CustomDrawer from '../components/CustomDrawer.js';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+
+import colours from '../config/colours';
+
+/**
+ * Holds the root stack navigator
+ */
 export default function MainNavigationStack(){
 
     const Stack = createNativeStackNavigator();

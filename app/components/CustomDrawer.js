@@ -1,14 +1,15 @@
-import {
-    DrawerContentScrollView,
-    DrawerItemList,
-    DrawerItem,
-    useDrawerProgress
-} from '@react-navigation/drawer';
 import { useState } from 'react';
-import { StyleSheet, Text, SafeAreaView, View, Dimensions } from 'react-native';
+import { Text, View, Dimensions } from 'react-native';
 import {Avatar, Drawer} from 'react-native-paper';
+
 import colours from '../config/colours';
-import {Animated, interpolate } from 'react-native-reanimated';
+
+/**
+   * Acts as the content to be displayed inside the drawer navigation
+   * Gives access to more screens and a login planned for the future
+   * @param {Object} navigation  Used to navigate between screens.    
+   * @return                       Returns the CustomDrawer component
+*/
 export default function CustomDrawer({navigation}) {
 
     // Use for relative sizing based on screen size:

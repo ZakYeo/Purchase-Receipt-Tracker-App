@@ -1,19 +1,22 @@
 import React, { useState, useRef } from "react";
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  ImageBackground,
-  StyleSheet,
-  Button
-} from "react-native";
+import { Text, View, TouchableOpacity, ImageBackground, StyleSheet, Button } from "react-native";
+import { ActivityIndicator, MD2Colors,IconButton } from "react-native-paper";
 import { Camera, FlashMode } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import * as FileSystem from 'expo-file-system';
-import { ActivityIndicator, MD2Colors,IconButton, MD3Colors } from "react-native-paper";
+
 import ExtractTextFromImage from "../functions/ExtractTextFromImage";
 import ExtractData from "../functions/ExtractData";
 
+
+/**
+   * A screen built for the purpose of using the device's built-in camera
+   * Has icon to swap from front to back camera, icon to take a photo & flash icon
+   * Once a photo is taken, will attempt to call the Taggun API
+   * API will perform optical character recognition & natural language processing for an output
+   * @param {Object} navigation Used to navigate between screens.    
+   * @return                    Returns the camera component wrapped in a view
+*/
 export default function ReceiptCamera( { navigation } ) {
 
   const [permission, requestPermission] = Camera.useCameraPermissions();

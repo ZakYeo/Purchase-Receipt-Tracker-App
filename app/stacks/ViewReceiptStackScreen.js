@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import { StyleSheet, Image, View } from 'react-native';
+import React from 'react';
+import { StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import colours from '../config/colours';
 import CameraScreen from '../screens/CameraScreen';
-import ViewReceiptScreen from '../screens/ViewReceiptScreen';
-import constants from '../config/constants';
 import AddReceiptScreen from '../screens/AddReceiptScreen';
 import ViewReceiptsWithDrawer from './ViewReceiptsWithDrawer';
-function ViewReceiptStackScreen({navigation}) {
+
+/**
+ * Holds the stack navigator for viewing receipts, camera & adding receipts
+ */
+function ViewReceiptStackScreen() {
 
   const ViewStack = createNativeStackNavigator();
   

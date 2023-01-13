@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView, Text } from 'react-native';
+import { StyleSheet, ScrollView, Text } from 'react-native';
 import colours from '../config/colours';
-function ExpenseAnalysis({navigation, route}) {
- 
-  
+
+/**
+   * Displays analytical details of the receipts
+*/
+function ExpenseAnalysis() {
 
     return (
       <ScrollView style={styles.container}>

@@ -1,8 +1,17 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
+
 import ReceiptForm from '../components/ReceiptForm';
 
-import { useIsFocused } from '@react-navigation/native';
+/**
+   * Pop-up Dialog to show detailed information about a receipt
+   * Shows info such as receipt name, location name, etc.
+   * Has options to edit and delete the receipt
+   * @param {Object} route      Holds parameters passed from screens
+   * @param {Object} navigation Used to navigate between screens.    
+   * @return                    Returns the ReceiptForm component wrapped in a scrollView
+*/
 function AddReceiptScreen({navigation, route}) {
 
   

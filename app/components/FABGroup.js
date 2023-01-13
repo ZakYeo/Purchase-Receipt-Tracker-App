@@ -1,13 +1,27 @@
 
 import React from 'react';
 import { FAB, Portal } from 'react-native-paper';
+import { Camera } from "expo-camera";
+
 import pickImageAsync from '../functions/PickImageAsync';
 import ExtractTextFromImage from '../functions/ExtractTextFromImage';
 import ExtractData from '../functions/ExtractData';
+
 import colours from '../config/colours';
 
-import { Camera } from "expo-camera";
 
+
+/**
+   * Custom FABGroup from react-native-paper
+   * Stays in the bottom-right corner of the screen. 
+   * Press to open for animation and navigation options
+   * <Portal> used to make FABGroup appear above other components
+   * @param {Function} onToggleSnackBar  Function to toggle visibility of the snackbar
+   * @param {Object} navigation           Used to navigate between screens.    
+   * @return                              Returns the FABGroup component wrapped in a Portal
+   * 
+   * @link https://callstack.github.io/react-native-paper/fab-group.html
+*/
 const FABGroup = ( {navigation, onToggleSnackBar } ) => {
   const [state, setState] = React.useState({ open: false });
 

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Image, StyleSheet, View, Text } from 'react-native';
+import React from 'react';
+import { StyleSheet } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import ViewReceiptScreen from '../screens/ViewReceiptScreen';
 import CustomDrawerContent from '../components/CustomDrawer';
@@ -7,6 +7,10 @@ import colours from '../config/colours';
 import ExpenseAnalysis from '../screens/ExpenseAnalysis';
 import AboutScreen from '../screens/AboutScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+
+/**
+ * Allows for drawer navigation in the View Receipt
+ */
 export default function ViewReceiptsWithDrawer({props}) {
   
     const Drawer = createDrawerNavigator();

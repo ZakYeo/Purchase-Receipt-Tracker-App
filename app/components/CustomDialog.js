@@ -1,7 +1,19 @@
-import {Dialog, Button} from 'react-native-paper';
 import { Text, Image, StyleSheet, View, ScrollView } from 'react-native';
-import DeleteReceipt from '../functions/DeleteReceipt';
+import {Dialog, Button} from 'react-native-paper';
 import * as SQLite from 'expo-sqlite';
+
+import DeleteReceipt from '../functions/DeleteReceipt';
+
+/**
+   * Pop-up Dialog to show detailed information about a receipt
+   * Shows info such as receipt name, location name, etc.
+   * Has options to edit and delete the receipt
+   * @param {Boolean}  dlgVisible  State variable to represent the dialog visibility
+   * @param {Function} hideDialog  Function to hide the dialog
+   * @param {Object}   dlgContent  Object that holds the receipt information to be displayed
+   * @param {Object}   navigation  Used to navigate between screens.    
+   * @return                       Returns the dialog component
+*/
 const CustomDialog = ({dlgVisible, hideDialog, dlgContent, navigation}) => {
 
     const handleDelete = () => {

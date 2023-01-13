@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, ScrollView, TextInput, Image, Dimensions, Text } from 'react-native';
+import { StyleSheet, View, TextInput, Image, Dimensions, Text } from 'react-native';
 import { Button, TouchableRipple } from 'react-native-paper';
 import * as SQLite from 'expo-sqlite';
 import { Camera } from "expo-camera";
 import DateTimePicker from '@react-native-community/datetimepicker';
+
 import InsertReceipt from '../functions/InsertReceipt'
 import EditReceipt from '../functions/EditReceipt';
+
 import colours from '../config/colours';
 
-
+/**
+   * Component for the purpose of adding a new receipt to the database
+   * Can be auto-filled using the Taggun API or manually edited / filled
+   * Stays in the bottom-right corner of the screen. 
+   * Press to open for animation and navigation options
+   * @param {Object} navigation Used to navigate between screens.    
+   * @param {Object} recpInfo   Object to hold all the information about the receipt (if any)
+   * @return                    Returns a View with mainly text inputs but also other components
+*/
 function ReceiptForm({
                       navigation, 
                       recpInfo={},

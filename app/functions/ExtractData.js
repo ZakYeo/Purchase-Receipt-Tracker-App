@@ -1,5 +1,10 @@
-
-
+/**
+   * Function to take the data response from Taggun API and format it
+   * Compiles all the data into a single object, receiptInformation
+   * @param {Object}  data   The data to parse
+   * @param {String} base64  Base64 of the image of the receipt
+   * @return                 Object holding parsed, usable receipt information
+*/
 export default ExtractData = (data, base64) => {
     if(data?.totalAmount.data !== undefined){
         data.totalAmount.data = data.totalAmount.data.toString();
@@ -30,13 +35,13 @@ export default ExtractData = (data, base64) => {
             price = item.data.toString(); 
             // Often the price will not have decimal places as a price should.
             if(price.length == 1){ // Check now
-            // Add decimal place
-            price = price + ".";
+                // Add decimal place
+                price = price + ".";
             }
             while(price.length < 4){
-            // Pad price with decimal places.
-            // e.g 2. turns to 2.00, 2.0 into 2.00
-            price = price + "0"
+                // Pad price with decimal places.
+                // e.g 2. turns to 2.00, 2.0 into 2.00
+                price = price + "0"
             }
             // Loop through every currency
             currencyUnits.forEach((unit, _) => {
@@ -48,7 +53,6 @@ export default ExtractData = (data, base64) => {
                 quantity = itemAndQuantityStr.match(quantityRegex)
                 // Now remove the quantity from item name
                 itemNameStr = itemAndQuantityStr.replace(`${quantity}`, "");
-    
                 // Check if the quantity is a null value
                 if(!Object.is(quantity, null) && quantity.length > 0){
                 // Typically indicates this "item" has been read incorrectly by the OCR
@@ -57,12 +61,8 @@ export default ExtractData = (data, base64) => {
                 receiptInformation.items[itemNameStr] = quantity[0];
                 }
             }
-            
             });
-    
         });
     }
-    
-
     return receiptInformation;
 }

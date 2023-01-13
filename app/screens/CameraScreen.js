@@ -3,10 +3,14 @@ import { View, StyleSheet } from 'react-native';
 import ReceiptCamera from '../components/ReceiptCamera';
 import { useIsFocused } from '@react-navigation/native';
 
-
+/**
+   * Screen to hold the ReceiptCamera component
+   * @param {Object} navigation Used to navigate between screens.    
+   * @return                    Returns the ReceiptCamera component wrapped in a View
+*/
 function CameraScreen( {navigation} ) {
 
-  // Fixes a bug where the camera doesn't load in certain situations:
+  // Fixes a bug where the camera doesn't load in certain situations
   const isFocused = useIsFocused(); 
  
     return (

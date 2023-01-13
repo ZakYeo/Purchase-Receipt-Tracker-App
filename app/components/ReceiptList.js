@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
 import {View, StyleSheet, FlatList, Text} from 'react-native';
-import * as SQLite from 'expo-sqlite';
 import { List, TouchableRipple } from 'react-native-paper';
+import * as SQLite from 'expo-sqlite';
 
-
+/**
+   * Renders a list of receipts from the SQLite database
+   * Will render a message saying to add receipts if none are found.
+   * Displays a custom receipt information dialog if an individiual list item is pressed
+   * @param {Function} setDlgContent State variable to set the content of the receipt information dialog  
+   * @param {Function} showDialog    State variable to show or hide the receipt information dialog
+   * @return                         Returns a View a flat list or text
+*/
 function ReceiptList( { setDlgContent, showDialog } ){
 
     const [receipts, setReceipts] = useState("");
