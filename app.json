@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Purchase-Receipt-Tracker-App",
-    "slug": "PurchaseReceiptTrackerApp",
+    "name": "Receipt Ranger",
+    "slug": "receipt-ranger",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
