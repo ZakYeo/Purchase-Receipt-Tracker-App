@@ -18,6 +18,7 @@ function ReceiptList( { setDlgContent, showDialog } ){
     const db = SQLite.openDatabase('receipts.db');
 
     const getReceipts = () => {
+         // Grab receipts
         db.transaction(tx => {
           tx.executeSql(
             'select id,location_address,location_name,receipt_name,total_cost,total_tax,category,date from receipts',
@@ -27,17 +28,18 @@ function ReceiptList( { setDlgContent, showDialog } ){
         });
       };
 
-    const handleDlg = async (item) => {
+    const getBase64 = async (item) => {
+      // First grab base64 of this receipt
       db.transaction(tx => {
           tx.executeSql(
             'select base64 from receipts WHERE id=?',
             [item.id],
-            (_, { rows: { _array } }) => handleDlg2(item, _array[0].base64)
+            (_, { rows: { _array } }) => handleDlg(item, _array[0].base64)
           );
         })
-      
     };
-    const handleDlg2 = (item, base64) => {
+    const handleDlg = (item, base64) => {
+      // Now set base64 and handle dialog
       item.base64 = base64;
       setDlgContent(item);
       showDialog();
@@ -56,7 +58,7 @@ function ReceiptList( { setDlgContent, showDialog } ){
             removeClippedSubviews={true}
             renderItem={({ item }) => (
                 <TouchableRipple
-                  onPress={() => handleDlg(item)}
+                  onPress={() => getBase64(item)}
                   rippleColor="rgba(0, 0, 0, .32)"
                 >
                 <List.Item

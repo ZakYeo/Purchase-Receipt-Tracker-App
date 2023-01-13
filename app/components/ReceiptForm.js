@@ -17,6 +17,7 @@ import colours from '../config/colours';
    * Press to open for animation and navigation options
    * @param {Object} navigation Used to navigate between screens.    
    * @param {Object} recpInfo   Object to hold all the information about the receipt (if any)
+   * @param {Boolean} edit      Identify if the receipt is being edited or created
    * @return                    Returns a View with mainly text inputs but also other components
 */
 function ReceiptForm({
@@ -37,12 +38,6 @@ function ReceiptForm({
     const [base64, setBase64] = useState(recpInfo.base64);
 
     const [datePickerDate, setDatePickerDate] = useState(new Date());
-
-
-    //const [interpretedDate, setInterpretedDate] = useState(new Date());
-    /*if(recpInfo.date !== undefined){
-      setInterpretedDate(new Date(recpInfo.date).toString());
-    }*/
 
     const [showDate, setShowDate] = useState(false);
 
@@ -69,23 +64,21 @@ function ReceiptForm({
       if (!permission.granted) {
         // Camera permissions are not granted yet
         requestPermission();
-        
       }
-
       if(permission){
         navigation.navigate("Camera");
       }
 
     }
     const handleDateChange = (_, datePicked) => {
+      // Hide the date picker
       setShowDate(false);
+      // Set date 
       setDatePickerDate(new Date(datePicked));
+      // Display date in text input
       setUserDate(datePickerDate.toDateString());
-      
     };
 
-    
-    
     return (
       <View style={styles.container}>
         <View style={{flexDirection: "row", flex: 1, height: windowHeight*0.25}}>

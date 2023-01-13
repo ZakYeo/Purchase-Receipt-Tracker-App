@@ -44,15 +44,13 @@ export default function ReceiptCamera( { navigation } ) {
 
   const takePicture = async () => {
     if (!permission) return;
-    const photo = await camera.takePictureAsync(); //
+    // Take photo
+    const photo = await camera.takePictureAsync();
     setPreviewVisible(true);
     setCapturedImage(photo);
     setLoading(true);
-    
-    //if (media_permission)
-    //{
-    // MediaLibrary.saveToLibraryAsync(photo.uri);
-    //}
+
+    //Encode image to base64
     const imageBase64 = await FileSystem.readAsStringAsync(`${photo.uri}`,{
       encoding: FileSystem.EncodingType.Base64,
     })

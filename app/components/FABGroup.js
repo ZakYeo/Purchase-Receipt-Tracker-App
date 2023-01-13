@@ -34,11 +34,14 @@ const FABGroup = ( {navigation, onToggleSnackBar } ) => {
   const { open } = state;  
 
   const chooseReceiptFromLibrary = async () => {
+    // Open image picker
     const img = await pickImageAsync();
 
     if(img == null){
+      // No image chosen
       onToggleSnackBar();
     }else{
+      // Image chosen. Extract text and display in new screen
       let resp = await ExtractTextFromImage(img.base64);
       navigation.navigate("Add", {title: "Create Receipt",recpInfo: ExtractData(resp.data, img.base64)});
     }
@@ -46,6 +49,7 @@ const FABGroup = ( {navigation, onToggleSnackBar } ) => {
 
   const checkPermissionsBeforeCamera = async () => {
     if(!permission.granted){
+      //Ask for permission before opening camera
       requestPermission();
     }
 
